@@ -1,0 +1,12 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_save_nota"
+        android:title="@string/menu_item_savenota"
+        android:orderInCategory="110"
+        android:icon="@drawable/ic_note_add"
+        app:showAsAction="collapseActionView|ifRoom" />
+
+</menu>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+
+    <color name="azulito">#73B4EB</color>
+    <color name="verdecito">#79BE7B</color>
+    <color name="rojito">#E679A2</color>
+    <color name="amarillito">#FFFF00</color>
+    <color name="naranjita">#E69B60</color>
+    <color name="gold">#EBA030</color>
+    <color name="silver">#CBCFCF</color>
+    <color name="bronze">#B47D10</color>
+    <color name="grey">#B1AFAF</color>
+    <color name="purple">#D582F0</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="label_soft">#F3D4BC</color>
+
+</resources>
