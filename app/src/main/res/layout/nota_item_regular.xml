@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/notas_container"
+<LinearLayout
+    android:id="@+id/notas_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardNotaDisplay"
@@ -26,15 +28,19 @@
                 android:id="@+id/nota_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/notas_titulo"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                tools:text="TITLE"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/nota_cuerpo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/notas_cuerpo"
+                tools:text="BODY"
+                android:maxLines="4"
+                android:ellipsize="end"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <com.google.android.material.card.MaterialCardView
@@ -53,8 +59,10 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="6dp"
                     android:paddingEnd="6dp"
-                    android:text="@string/notas_etiqueta"
-                    android:textSize="12sp"
+                    tools:text="Label"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="14sp"
                     android:textStyle="italic" />
             </com.google.android.material.card.MaterialCardView>
 

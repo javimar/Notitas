@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -118,13 +119,16 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
         SwipeUtil swipeHelper = new SwipeUtil(0, ItemTouchHelper.LEFT, getActivity())
         {
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction)
+            {
                 int swipedPosition = viewHolder.getAdapterPosition();
                 NotasAdapter adapter = (NotasAdapter) mRecyclerView.getAdapter();
                 adapter.pendingRemoval(swipedPosition);
             }
             @Override
-            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            public int getSwipeDirs(@NonNull RecyclerView recyclerView,
+                                    @NonNull RecyclerView.ViewHolder viewHolder)
+            {
                 int position = viewHolder.getAdapterPosition();
                 NotasAdapter adapter = (NotasAdapter) mRecyclerView.getAdapter();
                 if (adapter.isPendingRemoval(position))
@@ -140,6 +144,6 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
         // set swipe label
         swipeHelper.setLeftSwipeLabel(getString(R.string.notas_delete));
         // set swipe background-Color
-        swipeHelper.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.rojito));
+        swipeHelper.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.red));
     }
 }

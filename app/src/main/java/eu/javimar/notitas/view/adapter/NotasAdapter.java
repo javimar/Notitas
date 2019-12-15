@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import eu.javimar.notitas.R;
 import eu.javimar.notitas.listeners.NotasItemClickListener;
 import eu.javimar.notitas.model.Nota;
@@ -34,6 +36,7 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
     private List<Nota> mNotasList;
     private final NotasItemClickListener mOnClickListener;
     private final NotitasViewModel mViewModel;
+    private final Context mContext;
 
     private final List<Integer> itemsPendingRemoval;
     private static final int PENDING_REMOVAL_TIMEOUT = 3000;
@@ -43,6 +46,7 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
 
     public NotasAdapter(NotasItemClickListener listener, Context context)
     {
+        mContext = context;
         mViewModel = new ViewModelProvider((FragmentActivity)context)
                 .get(NotitasViewModel.class);
         mOnClickListener = listener;
@@ -95,6 +99,7 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
                 }
                 else
                 {
+                    holder.label.setVisibility(View.VISIBLE);
                     holder.label.setText(mNotasList.get(position).getNotaEtiqueta());
 
                 }
@@ -184,5 +189,7 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
         }
         mViewModel.deleteNota(id);
         notifyItemRemoved(position);
+        Toasty.info(mContext, R.string.delete_nota_success,
+                Toast.LENGTH_SHORT).show();
     }
 }

@@ -24,7 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="@string/notas_titulo"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textStyle="bold" />
             <TextView
@@ -35,7 +34,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:hint="@string/notas_cuerpo"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <com.google.android.material.card.MaterialCardView
@@ -52,7 +50,6 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="6dp"
                     android:paddingEnd="6dp"
-                    android:text="@string/notas_etiqueta"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textStyle="italic" />
             </com.google.android.material.card.MaterialCardView>

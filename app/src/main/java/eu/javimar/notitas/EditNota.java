@@ -77,10 +77,7 @@ public class EditNota extends AppCompatActivity
         {
             addTitle.setText(mNota.getNotaTitulo());
             addBody.setText(mNota.getNotaCuerpo());
-
-            String label = mNota.getNotaEtiqueta();
-            if(label == null || label.isEmpty()) addLabel.setVisibility(GONE);
-            else addLabel.setText(mNota.getNotaEtiqueta());
+            addLabel.setText(mNota.getNotaEtiqueta());
             mColor = mNota.getNotaColor();
             notaCard.setCardBackgroundColor(Color.parseColor(mColor));
         }

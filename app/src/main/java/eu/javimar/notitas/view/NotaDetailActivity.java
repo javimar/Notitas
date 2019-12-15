@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -60,7 +61,11 @@ public class NotaDetailActivity extends AppCompatActivity
 
             String label = mNota.getNotaEtiqueta();
             if(label == null || label.isEmpty()) etiqueta.setVisibility(GONE);
-            else etiqueta.setText(mNota.getNotaEtiqueta());
+            else
+            {
+                etiqueta.setVisibility(View.VISIBLE);
+                etiqueta.setText(mNota.getNotaEtiqueta());
+            }
             notaCard.setCardBackgroundColor(Color.parseColor(mNota.getNotaColor()));
         }
     }

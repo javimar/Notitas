@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +29,7 @@ public abstract class SwipeUtil extends ItemTouchHelper.SimpleCallback
     private int leftcolorCode;
     private String leftSwipeLabel;
 
-    public SwipeUtil(int dragDirs, int swipeDirs, Context context)
+    protected SwipeUtil(int dragDirs, int swipeDirs, Context context)
     {
         super(dragDirs, swipeDirs);
         this.context = context;
@@ -44,24 +45,27 @@ public abstract class SwipeUtil extends ItemTouchHelper.SimpleCallback
     }
 
     @Override
-    public boolean onMove(RecyclerView recyclerView,
-                          RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
+    public boolean onMove(@NonNull RecyclerView recyclerView,
+                          @NonNull RecyclerView.ViewHolder viewHolder,
+                          @NonNull RecyclerView.ViewHolder target)
     {
         return false;
     }
 
     @Override
-    public abstract void onSwiped(RecyclerView.ViewHolder viewHolder, int direction);
+    public abstract void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction);
 
     @Override
-    public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder)
+    public int getSwipeDirs(@NonNull RecyclerView recyclerView,
+                            @NonNull RecyclerView.ViewHolder viewHolder)
     {
         return super.getSwipeDirs(recyclerView, viewHolder);
     }
 
     /**  logic for drawing Canvas */
     @Override
-    public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView,
+                            RecyclerView.ViewHolder viewHolder,
                             float dX, float dY, int actionState, boolean isCurrentlyActive)
     {
         View itemView = viewHolder.itemView;
@@ -105,6 +109,7 @@ public abstract class SwipeUtil extends ItemTouchHelper.SimpleCallback
     public void setLeftSwipeLabel(String leftSwipeLabel) {
         this.leftSwipeLabel = leftSwipeLabel;
     }
+
     private int getLeftcolorCode() {
         return leftcolorCode;
     }

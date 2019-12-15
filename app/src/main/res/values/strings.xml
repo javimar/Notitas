@@ -4,7 +4,6 @@
     <string name="title_enter_nota">Add New Note</string>
     <string name="title_update_nota">Update Note</string>
 
-
     <!-- Menu actions -->
     <string name="action_settings">Settings</string>
 
@@ -12,20 +11,19 @@
     <string name="menu_item_deletenota">Delete Note</string>
     <string name="menu_item_editnota">Edit Note</string>
 
-
     <!-- UI -->
-    <string name="notas_titulo">Title</string>
-    <string name="notas_cuerpo">Body</string>
-    <string name="notas_etiqueta">Label</string>
+    <string name="notas_titulo">Add Title</string>
+    <string name="notas_cuerpo">Add body (optional)</string>
+    <string name="notas_etiqueta">Label (optional)</string>
     <string name="notas_color">Color</string>
     <string name="notas_undo">Undo</string>
-    <string name="notas_delete">Delete</string>
-    <string name="add_nota_success">Note added successfully</string>
-    <string name="add_nota_failed">Note could not be added</string>
-    <string name="update_nota_success">Note updated successfully</string>
+    <string name="notas_delete">Delete?</string>
+    <string name="add_nota_success">Note added</string>
+    <string name="add_nota_failed">Failed to add the note</string>
+    <string name="update_nota_success">Note updated</string>
+    <string name="delete_nota_success">Note deleted</string>
 
     <string name="delete_nota_dialog_msg">Are you sure you want to delete this Note?</string>
-
 
     <string name="err_no_notes_found">No notes found. Go ahead and create one</string>
     <string name="err_title_missing">Title must be entered</string>
