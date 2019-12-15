@@ -11,9 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +27,6 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
 {
     @BindView(R.id.rv_nota_recycler) RecyclerView mRecyclerView;
     @BindView(R.id.tv_empty_view) TextView mEmptyView;
-
-    // Save the recycler position on screen orientation and when coming back from DETAIL
-    private static int sLastFirstVisiblePosition;
 
     // Reference to implementation de OnNotaItemSelectedListener by MainActivity
     private OnNotaItemSelectedListener mListener;
@@ -53,7 +50,8 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
     {
         super.onActivityCreated(savedInstanceState);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL));
         mNotasAdapter = new NotasAdapter(this,getActivity());
         mRecyclerView.setAdapter(mNotasAdapter);
         observerSetup();
@@ -96,22 +94,6 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
     public void setNotaItemListener(OnNotaItemSelectedListener listener)
     {
         this.mListener = listener;
-    }
-
-    /** Save and restore position of the RecyclerView */
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        sLastFirstVisiblePosition = ((GridLayoutManager)mRecyclerView
-                .getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        mRecyclerView.getLayoutManager().scrollToPosition(sLastFirstVisiblePosition);
     }
 
     private void setSwipeForRecyclerView()
