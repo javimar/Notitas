@@ -20,8 +20,6 @@ import eu.javimar.notitas.model.Nota;
 import eu.javimar.notitas.util.ColorButton;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
-import static android.view.View.GONE;
-
 public class EditNota extends AppCompatActivity
 {
     @BindView(R.id.addTitle) EditText addTitle;

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -105,4 +106,36 @@ class NotitasRepository
         }
     }
 
+
+    /**
+     * SEARCH FUNCTIONALITY
+     */
+    private final MutableLiveData<List<Nota>> searchQueryResults = new MutableLiveData<>();
+    private void asyncSearchFinished(List<Nota> queryResults) { searchQueryResults.setValue(queryResults); }
+    MutableLiveData<List<Nota>> getSearchQueryResults() { return searchQueryResults; }
+    void getSearchResults(String query)
+    {
+        SearchAsyncTask task = new SearchAsyncTask(notasDao);
+        task.delegate = this;
+        task.execute(query);
+    }
+    private static class SearchAsyncTask extends AsyncTask<String, Void, List<Nota>>
+    {
+        private final NotasDao asyncTaskDao;
+        private NotitasRepository delegate = null;
+        SearchAsyncTask (NotasDao dao)
+        {
+            asyncTaskDao = dao;
+        }
+        @Override
+        protected List<Nota> doInBackground(String... queries)
+        {
+            return asyncTaskDao.getSearchResults(queries[0]);
+        }
+        @Override
+        protected void onPostExecute(List<Nota> nota)
+        {
+            delegate.asyncSearchFinished(nota);
+        }
+    }
 }

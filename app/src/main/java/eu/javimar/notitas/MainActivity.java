@@ -41,17 +41,20 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package eu.javimar.notitas;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,6 +97,18 @@ public class MainActivity extends AppCompatActivity implements
                     .findFragmentByTag(FRAGMENT_LIST_TAG);
         }
         displayFragmentList();
+
+        // Get the intent, verify the action and get the query
+        if(Intent.ACTION_SEARCH.equals(getIntent().getAction()))
+        {
+            String query = getIntent().getStringExtra(SearchManager.QUERY);
+            searchNotas(query);
+        }
+    }
+
+    private void searchNotas(String query)
+    {
+        mFragmentNotaList.passSearchResults(query);
     }
 
     private void displayFragmentList()
@@ -116,16 +131,35 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-        }
-        return super.onOptionsItemSelected(item);
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        // Assumes current activity is the searchable activity
+        //searchView.setColor(getResources().getColor(R.color.white));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSubmitButtonEnabled(false);
+        searchView.setIconifiedByDefault(true);
+
+        SearchView.SearchAutoComplete searchAutoComplete =
+                searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchAutoComplete.setTextColor(getResources().getColor(R.color.colorAccent));
+        searchAutoComplete.setHintTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        // Get the search close button image view
+        ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
+        // Set on click listener
+        closeButton.setOnClickListener(v -> //onClick() :-)
+        {
+            //Clear query
+            searchView.setQuery("", false);
+            //Collapse the action view
+            searchView.onActionViewCollapsed();
+            // Restablish Recycler View in FragmentList
+            mFragmentNotaList.resetRecycler();
+        });
+
+        return true;
     }
 
     @Override
@@ -135,5 +169,16 @@ public class MainActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, NotaDetailActivity.class);
         intent.putExtra("notaId", id);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent)
+    {
+        super.onNewIntent(intent);
+        if (Intent.ACTION_SEARCH.equals(intent.getAction()))
+        {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            searchNotas(query);
+        }
     }
 }

@@ -34,6 +34,7 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
     // Adapter
     private NotasAdapter mNotasAdapter;
 
+    private NotitasViewModel mViewModel;
 
     @Nullable
     @Override
@@ -60,9 +61,8 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
 
     private void observerSetup()
     {
-        NotitasViewModel notitasViewModel =
-                new ViewModelProvider(this).get(NotitasViewModel.class);
-        notitasViewModel.getAllNotasSorted().observe(getViewLifecycleOwner(),
+        mViewModel = new ViewModelProvider(this).get(NotitasViewModel.class);
+        mViewModel.getAllNotasSorted().observe(getViewLifecycleOwner(),
                 notas ->
                 {
                     mNotasAdapter.setNotasList(notas);
@@ -76,6 +76,30 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
                         mEmptyView.setVisibility(View.GONE);
                     }
                 });
+    }
+
+    public void passSearchResults(String query)
+    {
+        // SQL wildcards %
+        mViewModel.getSearchResults("%" + query + "%");
+        mViewModel.getSearchQueryResults().observe(getViewLifecycleOwner(), notas ->
+        {
+            mNotasAdapter.setNotasList(notas);
+            if(notas == null || notas.size() <= 0)
+            {
+                mEmptyView.setVisibility(View.VISIBLE);
+                mEmptyView.setText(R.string.no_notes_found);
+            }
+            else
+            {
+                mEmptyView.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void resetRecycler()
+    {
+        observerSetup();
     }
 
     @Override

@@ -28,4 +28,8 @@ public interface NotasDao
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateNote(Nota nota);
+
+    @Query("SELECT * FROM notas WHERE notaTitulo LIKE :query " +
+            "OR notaCuerpo LIKE :query ORDER BY notaTitulo ASC")
+    List<Nota> getSearchResults(String query);
 }

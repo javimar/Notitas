@@ -10,6 +10,7 @@
     <string name="menu_item_savenota">Save Note</string>
     <string name="menu_item_deletenota">Delete Note</string>
     <string name="menu_item_editnota">Edit Note</string>
+    <string name="menu_search">Search</string>
 
     <!-- UI -->
     <string name="notas_titulo">Add Title</string>
@@ -28,5 +29,7 @@
     <string name="err_no_notes_found">No notes found. Go ahead and create one</string>
     <string name="err_title_missing">Title must be entered</string>
 
+    <string name="search_hint">Search in your notes</string>
+    <string name="no_notes_found">Search returned no hits, try again…</string>
 
 </resources>

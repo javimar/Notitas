@@ -5,8 +5,17 @@
     tools:context="eu.javimar.notitas.MainActivity">
 
     <item
+        android:id="@+id/action_search"
+        android:orderInCategory="50"
+        android:title="@string/menu_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="200"
+        android:visible="false"
         android:title="@string/action_settings"
         app:showAsAction="never" />
 
