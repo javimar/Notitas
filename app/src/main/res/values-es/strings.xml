@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notitas</string>
+    <string name="add_nota_failed">No se pudo añadir la nota</string>
+    <string name="add_nota_success">Nota añadida</string>
+    <string name="delete_nota_dialog_msg">¿Estás segur@ que quieres borrar esta Nota?</string>
+    <string name="delete_nota_success">Nota borrada</string>
+    <string name="err_no_notes_found">No se encontraron notas. Es hora de añadir una.</string>
+    <string name="err_title_missing">El título es obligatorio</string>
+    <string name="menu_item_deletenota">Borrar Nota</string>
+    <string name="menu_item_editnota">Editar Nota</string>
+    <string name="menu_item_savenota">Guardar Nota</string>
+    <string name="menu_search">Búsqueda</string>
+    <string name="no_notes_found">La búsqueda no devolvió ningún resultado</string>
+    <string name="notas_color">Color</string>
+    <string name="notas_cuerpo">Añadir descripción (opcional)</string>
+    <string name="notas_delete">¿Borrar?</string>
+    <string name="notas_etiqueta">Etiqueta (opcional)</string>
+    <string name="notas_titulo">Añadir título</string>
+    <string name="notas_undo">Deshacer</string>
+    <string name="search_hint">Buscar en tus notas</string>
+    <string name="title_enter_nota">Añadir nota nueva</string>
+    <string name="title_update_nota">Actualizar nota</string>
+    <string name="update_nota_success">Nota actualizada</string>
+</resources>

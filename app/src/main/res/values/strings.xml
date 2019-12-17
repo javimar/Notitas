@@ -1,11 +1,11 @@
 <resources>
 
-    <string name="app_name">Notitas</string>
+    <string name="app_name">Little Notes</string>
     <string name="title_enter_nota">Add New Note</string>
     <string name="title_update_nota">Update Note</string>
 
     <!-- Menu actions -->
-    <string name="action_settings">Settings</string>
+    <string name="action_settings" translatable="false">Settings</string>
 
     <string name="menu_item_savenota">Save Note</string>
     <string name="menu_item_deletenota">Delete Note</string>
