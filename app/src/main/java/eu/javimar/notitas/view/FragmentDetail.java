@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -35,6 +36,7 @@ public class FragmentDetail extends Fragment
     // Activity views
     private Toolbar mToolbarDetail;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private ScrollView mScroll;
 
     @Nullable
     @Override
@@ -43,11 +45,16 @@ public class FragmentDetail extends Fragment
     {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, rootView);
+        return rootView;
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
         mToolbarDetail = getActivity().findViewById(R.id.toolbar_detail);
         mCollapsingToolbarLayout = getActivity().findViewById(R.id.collapse_toolbar_detail);
-
-        return rootView;
+        mScroll = getActivity().findViewById(R.id.scroll_view_detail);
     }
 
     void setScreenValues(Nota nota)
@@ -85,6 +92,7 @@ public class FragmentDetail extends Fragment
                     window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             }
         }
+        mScroll.setBackgroundColor(color);
         mToolbarDetail.setBackgroundColor(color);
         mCollapsingToolbarLayout.setContentScrimColor(color);
         mCollapsingToolbarLayout.setStatusBarScrimColor(color);
