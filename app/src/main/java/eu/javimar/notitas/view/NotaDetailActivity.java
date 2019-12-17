@@ -1,17 +1,16 @@
 package eu.javimar.notitas.view;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,54 +19,47 @@ import eu.javimar.notitas.R;
 import eu.javimar.notitas.model.Nota;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
-import static android.view.View.GONE;
-
 public class NotaDetailActivity extends AppCompatActivity
 {
-    @BindView(R.id.title) TextView title;
-    @BindView(R.id.body) TextView body;
-    @BindView(R.id.etiqueta) TextView etiqueta;
-    @BindView(R.id.cardViewNota) CardView notaCard;
+    @BindView(R.id.toolbar_detail) Toolbar mToolbarDetail;
+    @BindView(R.id.collapse_toolbar_detail) CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private NotitasViewModel mViewModel;
     private Nota mNota;
-
     private int mNotaId;
 
+    private FragmentDetail mFragmentDetail;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nota_detail);
         ButterKnife.bind(this);
 
+        // Toolbar
+        setSupportActionBar(mToolbarDetail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mCollapsingToolbarLayout.setTitleEnabled(false);
+
+        mFragmentDetail = (FragmentDetail) getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_detail);
+
         mNotaId = getIntent().getIntExtra("notaId", 0);
         mViewModel = new ViewModelProvider(this).get(NotitasViewModel.class);
     }
 
     @Override
-    protected void onStart()
+    protected void onResume()
     {
-        setScreenValues();
-        super.onStart();
+        refreshScreen();
+        super.onResume();
     }
 
-    private void setScreenValues()
+    private void refreshScreen()
     {
         mNota = mViewModel.findNota(mNotaId);
-        if(mNota != null)
-        {
-            title.setText(mNota.getNotaTitulo());
-            body.setText(mNota.getNotaCuerpo());
-
-            String label = mNota.getNotaEtiqueta();
-            if(label == null || label.isEmpty()) etiqueta.setVisibility(GONE);
-            else
-            {
-                etiqueta.setVisibility(View.VISIBLE);
-                etiqueta.setText(mNota.getNotaEtiqueta());
-            }
-            notaCard.setCardBackgroundColor(Color.parseColor(mNota.getNotaColor()));
-        }
+        mFragmentDetail.setScreenValues(mNota);
     }
 
     @Override

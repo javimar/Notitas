@@ -1,17 +1,23 @@
 package eu.javimar.notitas;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +32,8 @@ public class EditNota extends AppCompatActivity
     @BindView(R.id.addBody) EditText addBody;
     @BindView(R.id.addEtiqueta) EditText addLabel;
     @BindView(R.id.cardViewNota) CardView notaCard;
+    @BindView(R.id.toolbar_enter_nota) Toolbar mToolbar;
+    @BindView(R.id.collapse_toolbar_enter_nota) CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private NotitasViewModel mViewModel;
     private boolean mNewNota;
@@ -36,8 +44,13 @@ public class EditNota extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enter_nota);
+        setContentView(R.layout.activity_enter_nota_main);
         ButterKnife.bind(this);
+
+        // Toolbar
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mCollapsingToolbarLayout.setTitleEnabled(false);
 
         mViewModel = new ViewModelProvider(this).get(NotitasViewModel.class);
 
@@ -50,6 +63,7 @@ public class EditNota extends AppCompatActivity
             // This is a new notaCard, so change the app bar to say Enter
             setTitle(getString(R.string.title_enter_nota));
             mNewNota = true;
+            setCollapsingBarColor(getResources().getColor(R.color.white));
         }
         else
         {
@@ -67,6 +81,7 @@ public class EditNota extends AppCompatActivity
         int colorId = ColorButton.colorButton(id);
         mColor = "#" + Integer.toHexString(ContextCompat.getColor(this, colorId));
         notaCard.setBackgroundColor(Color.parseColor(mColor));
+        setCollapsingBarColor(Color.parseColor(mColor));
     }
 
     private void setScreenValues()
@@ -78,6 +93,7 @@ public class EditNota extends AppCompatActivity
             addLabel.setText(mNota.getNotaEtiqueta());
             mColor = mNota.getNotaColor();
             notaCard.setCardBackgroundColor(Color.parseColor(mColor));
+            setCollapsingBarColor(Color.parseColor(mNota.getNotaColor()));
         }
     }
 
@@ -153,5 +169,22 @@ public class EditNota extends AppCompatActivity
                     Toast.LENGTH_SHORT).show();
         }
         finish();
+    }
+
+    // gives nota color to the status bar and collapsing bar
+    private void setCollapsingBarColor(int color)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(color);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                //  set status text dark
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+        mToolbar.setBackgroundColor(color);
+        mCollapsingToolbarLayout.setContentScrimColor(color);
+        mCollapsingToolbarLayout.setStatusBarScrimColor(color);
     }
 }

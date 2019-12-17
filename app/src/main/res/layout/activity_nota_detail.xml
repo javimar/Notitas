@@ -1,60 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewNota"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="Autofill"
-        android:layout_margin="16dp">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        tools:targetApi="lollipop">
 
-        <LinearLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapse_toolbar_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:fitsSystemWindows="true">
 
-            <TextView
-                android:id="@+id/title"
+            <include
+                android:id="@+id/toolbar_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/body"
-                android:background="@null"
-                android:gravity="start"
-                android:padding="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                layout="@layout/toolbar"/>
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                app:strokeColor="#000"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="6dp" >
-                <TextView
-                    android:id="@+id/etiqueta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="6dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textStyle="italic" />
-            </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </androidx.cardview.widget.CardView>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_detail"
+        android:name="eu.javimar.notitas.view.FragmentDetail"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

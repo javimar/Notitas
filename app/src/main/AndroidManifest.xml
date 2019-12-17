@@ -31,7 +31,8 @@
         <activity
             android:name=".view.NotaDetailActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="eu.javimar.notitas.MainActivity" />
@@ -40,6 +41,7 @@
         <activity
             android:name=".EditNota"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

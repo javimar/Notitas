@@ -10,8 +10,7 @@
         android:id="@+id/cardViewNota"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="Autofill"
-        android:layout_margin="16dp">
+        tools:ignore="Autofill">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,49 +71,49 @@
                         android:id="@+id/azulito"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/azulito"
+                        android:background="@color/c1"
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
                     <Button
                         android:id="@+id/verdecito"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/verdecito"
+                        android:background="@color/c2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
                         android:id="@+id/rojito"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/rojito"
+                        android:background="@color/c3"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
                         android:id="@+id/amarillito"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/amarillito"
+                        android:background="@color/c4"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
                         android:id="@+id/naranjita"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/naranjita"
+                        android:background="@color/c5"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
                         android:id="@+id/gold"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/gold"
+                        android:background="@color/c6"
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
                     <Button
                         android:id="@+id/silver"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/silver"
+                        android:background="@color/c7"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
@@ -122,13 +121,13 @@
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
                         android:layout_width="30dp"
-                        android:background="@color/bronze"
+                        android:background="@color/c8"
                         android:layout_height="30dp"/>
                     <Button
                         android:id="@+id/grey"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/grey"
+                        android:background="@color/c9"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button

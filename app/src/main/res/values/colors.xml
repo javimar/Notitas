@@ -2,18 +2,18 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#B2EBF2</color>
 
 
-    <color name="azulito">#73B4EB</color>
-    <color name="verdecito">#79BE7B</color>
-    <color name="rojito">#E679A2</color>
-    <color name="amarillito">#FFFF00</color>
-    <color name="naranjita">#E69B60</color>
-    <color name="gold">#EBA030</color>
-    <color name="silver">#CBCFCF</color>
-    <color name="bronze">#B47D10</color>
-    <color name="grey">#B1AFAF</color>
+    <color name="c1">#73B4EB</color>
+    <color name="c2">#79BE7B</color>
+    <color name="c3">#E679A2</color>
+    <color name="c4">#FFFF00</color>
+    <color name="c5">#FF9800</color>
+    <color name="c6">#80DEEA</color>
+    <color name="c7">#CBCFCF</color>
+    <color name="c8">#7CB342</color>
+    <color name="c9">#76FF03</color>
     <color name="purple">#D582F0</color>
     <color name="white">#FFFFFF</color>
 
