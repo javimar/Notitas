@@ -32,21 +32,25 @@
                     tools:text="TITLE"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/body"
-                    android:background="@null"
-                    android:gravity="start"
-                    android:padding="8dp"
-                    tools:text="BODY"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:background="@null"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="start"
+                    android:lineSpacingMultiplier="1.5"
+                    android:padding="8dp"
+                    android:textSize="18sp"
+                    tools:text="Description of the note" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardViewLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     app:strokeWidth="1dp"
                     app:strokeColor="#000000"
                     app:cardCornerRadius="10dp" >

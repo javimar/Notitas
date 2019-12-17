@@ -10,44 +10,44 @@ public class ColorButton
 
         switch(id)
         {
-            case R.id.azulito:
+            case R.id.c1:
                 color = R.color.c1;
                 break;
 
-            case R.id.verdecito:
+            case R.id.c2:
                 color = R.color.c2;
                 break;
 
-            case R.id.rojito:
+            case R.id.c3:
                 color = R.color.c3;
                 break;
 
-            case R.id.amarillito:
+            case R.id.c4:
                 color = R.color.c4;
                 break;
 
-            case R.id.naranjita:
+            case R.id.c5:
                 color = R.color.c5;
                 break;
 
-            case R.id.gold:
+            case R.id.c6:
                 color = R.color.c6;
                 break;
 
-            case R.id.silver:
+            case R.id.c7:
                 color = R.color.c7;
                 break;
 
-            case R.id.bronze:
+            case R.id.c8:
                 color = R.color.c8;
                 break;
 
-            case R.id.grey:
+            case R.id.c9:
                 color = R.color.c9;
                 break;
 
-            case R.id.purple:
-                color = R.color.purple;
+            case R.id.c10:
+                color = R.color.c10;
                 break;
 
             case R.id.white:

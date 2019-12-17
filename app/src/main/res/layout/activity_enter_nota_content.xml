@@ -32,12 +32,14 @@
                 android:background="@null"
                 android:gravity="start"
                 android:padding="8dp"
+                android:lineSpacingMultiplier="1.5"
+                android:fontFamily="@font/roboto"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:inputType="textMultiLine"
                 android:hint="@string/notas_cuerpo"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="18sp"
                 android:importantForAutofill="no" />
 
             <EditText
@@ -68,73 +70,73 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textStyle="bold" />
                     <Button
-                        android:id="@+id/azulito"
+                        android:id="@+id/c1"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
                         android:background="@color/c1"
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
                     <Button
-                        android:id="@+id/verdecito"
+                        android:id="@+id/c2"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
                         android:background="@color/c2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
-                        android:id="@+id/rojito"
+                        android:id="@+id/c3"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
                         android:background="@color/c3"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
-                        android:id="@+id/amarillito"
+                        android:id="@+id/c4"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
                         android:background="@color/c4"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
-                        android:id="@+id/naranjita"
+                        android:id="@+id/c5"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
                         android:background="@color/c5"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
-                        android:id="@+id/gold"
+                        android:id="@+id/c6"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
                         android:background="@color/c6"
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
                     <Button
-                        android:id="@+id/silver"
+                        android:id="@+id/c7"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
                         android:background="@color/c7"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
-                        android:id="@+id/bronze"
+                        android:id="@+id/c8"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
                         android:layout_width="30dp"
                         android:background="@color/c8"
                         android:layout_height="30dp"/>
                     <Button
-                        android:id="@+id/grey"
+                        android:id="@+id/c9"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
                         android:background="@color/c9"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
-                        android:id="@+id/purple"
+                        android:id="@+id/c10"
                         android:onClick="buttonColor"
                         android:layout_marginEnd="10dp"
-                        android:background="@color/purple"
+                        android:background="@color/c10"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                     <Button
