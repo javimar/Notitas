@@ -19,6 +19,8 @@ import eu.javimar.notitas.R;
 import eu.javimar.notitas.model.Nota;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
+import static eu.javimar.notitas.util.WidgetUtil.refreshWidget;
+
 public class NotaDetailActivity extends AppCompatActivity
 {
     @BindView(R.id.toolbar_detail) Toolbar mToolbarDetail;
@@ -97,6 +99,9 @@ public class NotaDetailActivity extends AppCompatActivity
         {
             // User clicked the "Delete" button, so delete the notaCard.
             mViewModel.deleteNota(mNotaId);
+            // Update the widget with fresh data when deleting
+            refreshWidget(this);
+
             finish();
         });
         builder.setNegativeButton(android.R.string.cancel, (dialog, id) ->

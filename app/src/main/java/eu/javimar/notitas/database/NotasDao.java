@@ -32,4 +32,7 @@ public interface NotasDao
     @Query("SELECT * FROM notas WHERE notaTitulo LIKE :query " +
             "OR notaCuerpo LIKE :query ORDER BY notaTitulo ASC")
     List<Nota> getSearchResults(String query);
+
+    @Query("SELECT * FROM notas ORDER BY notaTitulo ASC")
+    List<Nota> getAllNotasForWidget();
 }

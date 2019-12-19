@@ -26,6 +26,8 @@ import eu.javimar.notitas.model.Nota;
 import eu.javimar.notitas.util.ColorButton;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
+import static eu.javimar.notitas.util.WidgetUtil.refreshWidget;
+
 public class EditNota extends AppCompatActivity
 {
     @BindView(R.id.addTitle) EditText addTitle;
@@ -168,6 +170,9 @@ public class EditNota extends AppCompatActivity
             Toasty.success(this, getString(R.string.update_nota_success),
                     Toast.LENGTH_SHORT).show();
         }
+        // Update the widget with fresh data when adding or updating
+        refreshWidget(this);
+
         finish();
     }
 

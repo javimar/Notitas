@@ -30,6 +30,7 @@ import eu.javimar.notitas.model.Nota;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
 import static android.view.View.GONE;
+import static eu.javimar.notitas.util.WidgetUtil.refreshWidget;
 
 public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHolder>
 {
@@ -189,9 +190,13 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
             // clear element
             itemsPendingRemoval.remove((Integer) id);
         }
+
         mViewModel.deleteNota(id);
         notifyItemRemoved(position);
         Toasty.info(mContext, R.string.delete_nota_success,
                 Toast.LENGTH_SHORT).show();
+
+        // Update the widget with fresh data when deleting
+        refreshWidget(mContext);
     }
 }
