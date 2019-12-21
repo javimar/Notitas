@@ -30,24 +30,36 @@ public class Nota implements Parcelable
     @ColumnInfo(name = "notaColor")
     private final String notaColor;
 
+    @ColumnInfo(name = "notaUriImage")
+    private final String notaUriImage;
+
+    @ColumnInfo(name = "notaUriAudio")
+    private final String notaUriAudio;
+
     public Nota(int notaId, String notaTitulo, String notaCuerpo,
-                String notaEtiqueta, String notaColor)
+                String notaEtiqueta, String notaColor, String notaUriImage,
+                String notaUriAudio)
     {
         this.notaId = notaId;
         this.notaTitulo = notaTitulo;
         this.notaCuerpo = notaCuerpo;
         this.notaEtiqueta = notaEtiqueta;
         this.notaColor = notaColor;
+        this.notaUriImage = notaUriImage;
+        this.notaUriAudio = notaUriAudio;
     }
 
     @Ignore
     public Nota(String notaTitulo, String notaCuerpo,
-                String notaEtiqueta, String notaColor)
+                String notaEtiqueta, String notaColor, String notaUriImage,
+                String notaUriAudio)
     {
         this.notaTitulo = notaTitulo;
         this.notaCuerpo = notaCuerpo;
         this.notaEtiqueta = notaEtiqueta;
         this.notaColor = notaColor;
+        this.notaUriImage = notaUriImage;
+        this.notaUriAudio = notaUriAudio;
     }
 
     public int getNotaId() {
@@ -70,6 +82,14 @@ public class Nota implements Parcelable
         return notaEtiqueta;
     }
 
+    public String getNotaUriImage() {
+        return notaUriImage;
+    }
+
+    public String getNotaUriAudio() {
+        return notaUriAudio;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -82,6 +102,8 @@ public class Nota implements Parcelable
         dest.writeString(this.notaCuerpo);
         dest.writeString(this.notaEtiqueta);
         dest.writeString(this.notaColor);
+        dest.writeString(this.notaUriImage);
+        dest.writeString(this.notaUriAudio);
     }
 
     protected Nota(Parcel in) {
@@ -90,6 +112,8 @@ public class Nota implements Parcelable
         this.notaCuerpo = in.readString();
         this.notaEtiqueta = in.readString();
         this.notaColor = in.readString();
+        this.notaUriImage = in.readString();
+        this.notaUriAudio = in.readString();
     }
 
     public static final Parcelable.Creator<Nota> CREATOR = new Parcelable.Creator<Nota>() {

@@ -7,8 +7,16 @@
     android:paddingTop="8dp"
     android:paddingBottom="8dp">
 
+    <ImageView
+        android:id="@+id/widget_nota_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/cd_image"
+        android:visibility="gone" />
+
     <TextView
-        android:id="@+id/widget_title"
+        android:id="@+id/widget_nota_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -20,7 +28,7 @@
         android:textStyle="bold"
         tools:text="TITLE" />
     <TextView
-        android:id="@+id/widget_body"
+        android:id="@+id/widget_nota_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"

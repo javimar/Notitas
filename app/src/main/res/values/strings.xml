@@ -3,6 +3,7 @@
     <string name="app_name">Little Notes</string>
     <string name="title_enter_nota">Add New Note</string>
     <string name="title_update_nota">Update Note</string>
+    <string name="title_audio">Audio Player</string>
 
     <!-- Menu actions -->
     <string name="action_settings" translatable="false">Settings</string>
@@ -11,25 +12,40 @@
     <string name="menu_item_deletenota">Delete Note</string>
     <string name="menu_item_editnota">Edit Note</string>
     <string name="menu_search">Search</string>
+    <string name="menu_item_photo">Photo</string>
+    <string name="menu_item_audio">Audio</string>
+    <string name="menu_item_image">Image</string>
+
+    <!-- IMAGES AND AUDIOS -->
+    <string name="play" translatable="false"><![CDATA[>]]></string>
+    <string name="rewind" translatable="false"><![CDATA[<<]]></string>
+    <string name="forward" translatable="false"><![CDATA[>>]]></string>
+    <string name="pause" translatable="false">||</string>
+    <string name="playing">Playing</string>
+    <string name="paused">Paused</string>
 
     <!-- UI -->
     <string name="notas_titulo">Add Title</string>
     <string name="notas_cuerpo">Add body (optional)</string>
     <string name="notas_etiqueta">Label (optional)</string>
-    <string name="notas_color">Color</string>
-    <string name="notas_undo">Undo</string>
-    <string name="notas_delete">Delete?</string>
     <string name="add_nota_success">Note added</string>
     <string name="add_nota_failed">Failed to add the note</string>
     <string name="update_nota_success">Note updated</string>
-    <string name="delete_nota_success">Note deleted</string>
+    <string name="cd_image" translatable="false">Image taken by the camera or chosen by user</string>
+
 
     <string name="delete_nota_dialog_msg">Are you sure you want to delete this Note?</string>
-
     <string name="err_no_notes_found">No notes found. Go ahead and create one</string>
     <string name="err_title_missing">Title must be entered</string>
+    <string name="err_audio_resource_not_valid">Audio resource is not valid anymore. It might have been deleted</string>
+    <string name="err_image_resource_not_valid">Picture resource is not valid anymore. It might have been deleted</string>
 
+    <!-- BÚSQUEDA -->
     <string name="search_hint">Search in your notes</string>
     <string name="no_notes_found">Search returned no hits, try again…</string>
+
+    <!-- MANIFEST -->
+    <string name="need_audio_permission">Cannot work with Audio. No permission granted</string>
+    <string name="explain_audio_permission">I need access to record audio</string>
 
 </resources>

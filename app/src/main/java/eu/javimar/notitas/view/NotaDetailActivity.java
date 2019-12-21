@@ -19,7 +19,7 @@ import eu.javimar.notitas.R;
 import eu.javimar.notitas.model.Nota;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
-import static eu.javimar.notitas.util.WidgetUtil.refreshWidget;
+import static eu.javimar.notitas.util.Utils.refreshWidget;
 
 public class NotaDetailActivity extends AppCompatActivity
 {

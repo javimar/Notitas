@@ -14,6 +14,14 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/notaImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:contentDescription="@string/cd_image"
+            />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewNota"
             android:layout_width="match_parent"
@@ -67,6 +75,17 @@
                         android:textStyle="italic" />
                 </com.google.android.material.card.MaterialCardView>
 
+                <ImageView
+                    android:id="@+id/audioIcon"
+                    android:layout_width="60dp"
+                    android:clickable="true"
+                    android:layout_height="60dp"
+                    android:tint="@color/colorPrimaryDark"
+                    android:contentDescription="@string/cd_image"
+                    android:visibility="gone"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/ic_audio"
+                    android:focusable="true" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

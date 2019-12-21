@@ -61,6 +61,8 @@ import butterknife.ButterKnife;
 import eu.javimar.notitas.view.FragmentNotaList;
 import eu.javimar.notitas.view.NotaDetailActivity;
 
+import static eu.javimar.notitas.util.Utils.getDpsFromDevice;
+
 public class MainActivity extends AppCompatActivity implements
         FragmentNotaList.OnNotaItemSelectedListener
 {
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements
     @BindView(R.id.toolbar_main) Toolbar toolbar;
 
     private FragmentNotaList mFragmentNotaList;
+
+    public static int[] deviceDensityIndependentPixels;
 
     private static final String FRAGMENT_LIST_TAG = "fragment_list_tag";
 
@@ -78,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        // Get and store this device DIPs for later processing of pictures
+        deviceDensityIndependentPixels = getDpsFromDevice(this);
 
         fab.setOnClickListener(view ->
         {

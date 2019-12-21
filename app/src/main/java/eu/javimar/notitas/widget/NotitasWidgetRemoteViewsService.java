@@ -2,7 +2,10 @@ package eu.javimar.notitas.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -13,6 +16,12 @@ import eu.javimar.notitas.R;
 import eu.javimar.notitas.database.MiBaseDatosNotas;
 import eu.javimar.notitas.database.NotasDao;
 import eu.javimar.notitas.model.Nota;
+import eu.javimar.notitas.util.BitmapScaler;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
+import static eu.javimar.notitas.util.Utils.isUriPointingToValidResource;
 
 public class NotitasWidgetRemoteViewsService extends RemoteViewsService
 {
@@ -24,7 +33,7 @@ public class NotitasWidgetRemoteViewsService extends RemoteViewsService
 
     class NotitasRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     {
-        private NotasDao notasDao;
+        private final NotasDao notasDao;
         private List<Nota> allNotas;
 
         NotitasRemoteViewsFactory(Context context)
@@ -62,15 +71,39 @@ public class NotitasWidgetRemoteViewsService extends RemoteViewsService
                     R.layout.widget_detail_list_item);
 
             // set the values
-            remoteViews.setTextViewText(R.id.widget_title,
+            remoteViews.setTextViewText(R.id.widget_nota_title,
                     allNotas.get(position).getNotaTitulo());
-            remoteViews.setTextViewText(R.id.widget_body,
+            remoteViews.setTextViewText(R.id.widget_nota_body,
                     allNotas.get(position).getNotaCuerpo());
+
+            // Load image in container via Glide
+            String uri = allNotas.get(position).getNotaUriImage();
+            if(uri == null)
+            {
+                remoteViews.setViewVisibility(R.id.widget_nota_image, GONE);
+            }
+            else
+            {
+                if(isUriPointingToValidResource(Uri
+                        .parse(uri), getApplicationContext()))
+                {
+                    remoteViews.setViewVisibility(R.id.widget_nota_image, VISIBLE);
+                    // scale it to fit the width
+                    Bitmap scaleImage = BitmapScaler
+                            .scaleToFitWidth(
+                                    BitmapFactory
+                                            .decodeFile(Uri.parse(uri).getPath()),
+                                    deviceDensityIndependentPixels[0]);
+
+                    remoteViews.setImageViewBitmap(R.id.widget_nota_image, scaleImage);
+                }
+            }
+
             remoteViews.setTextColor(R.id.widget_list, Color.parseColor(
                     allNotas.get(position).getNotaColor()));
-            remoteViews.setInt(R.id.widget_title,"setTextColor",
+            remoteViews.setInt(R.id.widget_nota_title,"setTextColor",
                     R.color.black);
-            remoteViews.setInt(R.id.widget_body,"setTextColor",
+            remoteViews.setInt(R.id.widget_nota_body,"setTextColor",
                     R.color.black);
             remoteViews.setInt(R.id.widget_list_item,"setBackgroundColor",
                     Color.parseColor(allNotas.get(position).getNotaColor()));

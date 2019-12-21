@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="eu.javimar.notitas">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -48,6 +50,16 @@
                 android:value="eu.javimar.notitas.MainActivity" />
         </activity>
 
+        <activity
+            android:name=".AudioActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_audio"
+            android:parentActivityName=".view.NotaDetailActivity" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="eu.javimar.notitas.view.NotaDetailActivity" />
+        </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -66,6 +78,16 @@
             android:name=".widget.NotitasWidgetRemoteViewsService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
     </application>
 

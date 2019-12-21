@@ -1,24 +1,23 @@
 package eu.javimar.notitas.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.Handler;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,31 +26,22 @@ import es.dmoral.toasty.Toasty;
 import eu.javimar.notitas.R;
 import eu.javimar.notitas.listeners.NotasItemClickListener;
 import eu.javimar.notitas.model.Nota;
-import eu.javimar.notitas.viewmodel.NotitasViewModel;
+import eu.javimar.notitas.util.BitmapScaler;
 
 import static android.view.View.GONE;
-import static eu.javimar.notitas.util.WidgetUtil.refreshWidget;
+import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
+import static eu.javimar.notitas.util.Utils.isUriPointingToValidResource;
 
 public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHolder>
 {
     private List<Nota> mNotasList;
     private final NotasItemClickListener mOnClickListener;
-    private final NotitasViewModel mViewModel;
-    private final Context mContext;
-
-    private final List<Integer> itemsPendingRemoval;
-    private static final int PENDING_REMOVAL_TIMEOUT = 3000;
-    private final Handler handler = new Handler();
-    @SuppressLint("UseSparseArrays")
-    private final HashMap<Integer, Runnable> pendingRunnables = new HashMap<>();
+    private Context mContext;
 
     public NotasAdapter(NotasItemClickListener listener, Context context)
     {
         mContext = context;
-        mViewModel = new ViewModelProvider((FragmentActivity)context)
-                .get(NotitasViewModel.class);
         mOnClickListener = listener;
-        itemsPendingRemoval = new ArrayList<>();
     }
 
     public void setNotasList(List<Nota> notasList)
@@ -72,43 +62,74 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
     @Override
     public void onBindViewHolder(@NonNull NotasViewHolder holder, int position)
     {
-        int id = getNotaId(position);
-
-        // get necessary information to compare if item is already waiting to be removed
-        if (itemsPendingRemoval.contains(id))
+        if(mNotasList != null)
         {
-            // show swipe layout and hide the regular layout
-            holder.clListContainer.setVisibility(GONE);
-            holder.llSwipeLayout.setVisibility(View.VISIBLE);
-            holder.tvUndo.setOnClickListener(v -> undoOption(id, position));
-        }
-        else
-        {
-            // Proceed normally with the regular layout and hide the swipe layout
-            holder.clListContainer.setVisibility(View.VISIBLE);
-            holder.llSwipeLayout.setVisibility(GONE);
+            String aux;
 
-            if(mNotasList != null)
+            holder.titulo.setText(mNotasList.get(position).getNotaTitulo());
+            holder.body.setText(mNotasList.get(position).getNotaCuerpo());
+
+            aux = mNotasList.get(position).getNotaEtiqueta();
+            if(aux == null || aux.equals(""))
             {
-                holder.titulo.setText(mNotasList.get(position).getNotaTitulo());
-                holder.body.setText(mNotasList.get(position).getNotaCuerpo());
+                holder.label.setVisibility(GONE);
+            }
+            else
+            {
+                holder.label.setVisibility(View.VISIBLE);
+                holder.label.setText(mNotasList.get(position).getNotaEtiqueta());
+                holder.displayTag
+                        .setCardBackgroundColor(Color.parseColor(mNotasList
+                                .get(position).getNotaColor()));
+            }
+            holder.displayNota
+                    .setCardBackgroundColor(Color.parseColor(mNotasList
+                            .get(position).getNotaColor()));
 
-                String tag = mNotasList.get(position).getNotaEtiqueta();
-                if(tag == null || tag.equals(""))
+            aux = mNotasList.get(position).getNotaUriAudio();
+            if(aux != null)
+            {
+                holder.audio.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                holder.audio.setVisibility(GONE);
+            }
+
+            aux = mNotasList.get(position).getNotaUriImage();
+            if(aux != null)
+            {
+                holder.image.setVisibility(View.VISIBLE);
+
+                if(!isUriPointingToValidResource(Uri.parse(aux), mContext))
                 {
-                    holder.label.setVisibility(GONE);
+                    Toasty.error(mContext, R.string.err_image_resource_not_valid,
+                            Toast.LENGTH_SHORT).show();
+                    Glide
+                            .with(mContext)
+                            .load(R.drawable.no_image)
+                            .into(holder.image);
                 }
                 else
                 {
-                    holder.label.setVisibility(View.VISIBLE);
-                    holder.label.setText(mNotasList.get(position).getNotaEtiqueta());
-                    holder.displayTag
-                            .setCardBackgroundColor(Color.parseColor(mNotasList
-                                    .get(position).getNotaColor()));
+                    // scale it to fit the width
+                    Bitmap scaleImage = BitmapScaler
+                            .scaleToFitWidth(
+                                    BitmapFactory
+                                            .decodeFile(Uri.parse(aux).getPath()),
+                                    deviceDensityIndependentPixels[0]);
+                    // Show it in the ImageView
+                    Glide
+                            .with(mContext)
+                            .load(scaleImage)
+                            .error(R.drawable.no_image)
+                            .into(holder.image);
+
                 }
-                holder.displayNota
-                        .setCardBackgroundColor(Color.parseColor(mNotasList
-                                .get(position).getNotaColor()));
+            }
+            else
+            {
+                holder.image.setVisibility(GONE);
             }
         }
     }
@@ -116,14 +137,14 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
     public class NotasViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener
     {
-        @BindView(R.id.undo) TextView tvUndo;
-        @BindView(R.id.swipeLayout) LinearLayout llSwipeLayout;
-        @BindView(R.id.notas_container) LinearLayout clListContainer;
         @BindView(R.id.nota_titulo) TextView titulo;
         @BindView(R.id.nota_cuerpo) TextView body;
         @BindView(R.id.nota_etiqueta) TextView label;
         @BindView(R.id.cardNotaDisplay) CardView displayNota;
         @BindView(R.id.cardViewTag) CardView displayTag;
+        @BindView(R.id.nota_image) ImageView image;
+        @BindView(R.id.nota_audio) ImageView audio;
+
 
         NotasViewHolder(View itemView)
         {
@@ -151,52 +172,5 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
     public int getItemCount()
     {
         return mNotasList == null ? 0 : mNotasList.size();
-    }
-
-    private void undoOption(int id, int position)
-    {
-        Runnable pendingRemovalRunnable = pendingRunnables.get(id);
-        pendingRunnables.remove(id);
-        if (pendingRemovalRunnable != null)
-            handler.removeCallbacks(pendingRemovalRunnable);
-        itemsPendingRemoval.remove((Integer) id);
-        notifyItemChanged(position);
-    }
-
-    /** Called when swipe action is initiated */
-    public void pendingRemoval(final int position)
-    {
-        int id = getNotaId(position);
-        if (!itemsPendingRemoval.contains(id))
-        {
-            itemsPendingRemoval.add(id);
-            notifyItemChanged(position);
-            Runnable pendingRemovalRunnable = () -> remove(id, position);
-            handler.postDelayed(pendingRemovalRunnable, PENDING_REMOVAL_TIMEOUT);
-            pendingRunnables.put(id, pendingRemovalRunnable);
-        }
-    }
-
-    public boolean isPendingRemoval(int position)
-    {
-        return itemsPendingRemoval.contains(getNotaId(position));
-    }
-
-    // Delete the nota from database
-    private void remove(int id, int position)
-    {
-        if (itemsPendingRemoval.contains(id))
-        {
-            // clear element
-            itemsPendingRemoval.remove((Integer) id);
-        }
-
-        mViewModel.deleteNota(id);
-        notifyItemRemoved(position);
-        Toasty.info(mContext, R.string.delete_nota_success,
-                Toast.LENGTH_SHORT).show();
-
-        // Update the widget with fresh data when deleting
-        refreshWidget(mContext);
     }
 }

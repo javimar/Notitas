@@ -1,157 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view_edit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewNota"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="Autofill">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/addImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/cd_image"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/addTitle"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewNota"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="@string/notas_titulo"
-                android:inputType="text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textStyle="bold" />
-            <EditText
-                android:id="@+id/addBody"
-                android:background="@null"
-                android:gravity="start"
-                android:padding="8dp"
-                android:lineSpacingMultiplier="1.5"
-                android:fontFamily="@font/roboto"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:inputType="textMultiLine"
-                android:hint="@string/notas_cuerpo"
-                android:textSize="18sp"
-                android:importantForAutofill="no" />
+                android:layout_height="match_parent"
+                tools:ignore="Autofill">
 
-            <EditText
-                android:id="@+id/addEtiqueta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/notas_etiqueta"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:layout_marginBottom="8dp"
-                android:textStyle="italic|bold"
-                android:inputType="text" />
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
                 <LinearLayout
-                    android:padding="5dp"
-                    android:scrollbars="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/addTitle"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/notas_color"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:background="@null"
+                        android:hint="@string/notas_titulo"
+                        android:inputType="text"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                         android:textStyle="bold" />
-                    <Button
-                        android:id="@+id/c1"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/c1"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <Button
-                        android:id="@+id/c2"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/c2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                    <Button
-                        android:id="@+id/c3"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/c3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                    <Button
-                        android:id="@+id/c4"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/c4"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                    <Button
-                        android:id="@+id/c5"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/c5"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                    <Button
-                        android:id="@+id/c6"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/c6"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <Button
-                        android:id="@+id/c7"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/c7"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                    <Button
-                        android:id="@+id/c8"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:layout_width="30dp"
-                        android:background="@color/c8"
-                        android:layout_height="30dp"/>
-                    <Button
-                        android:id="@+id/c9"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/c9"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                    <Button
-                        android:id="@+id/c10"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/c10"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                    <Button
-                        android:id="@+id/white"
-                        android:onClick="buttonColor"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/white"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
+
+                    <EditText
+                        android:id="@+id/addBody"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:background="@null"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="start"
+                        android:hint="@string/notas_cuerpo"
+                        android:importantForAutofill="no"
+                        android:inputType="textMultiLine"
+                        android:lineSpacingMultiplier="1.5"
+                        android:padding="8dp"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/addEtiqueta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:hint="@string/notas_etiqueta"
+                        android:inputType="text"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="italic|bold" />
+
+                    <ImageView
+                        android:id="@+id/addAudio"
+                        android:layout_width="60dp"
+                        android:clickable="true"
+                        android:layout_height="60dp"
+                        android:tint="@color/colorPrimaryDark"
+                        android:contentDescription="@string/cd_image"
+                        android:visibility="gone"
+                        android:layout_marginBottom="8dp"
+                        app:srcCompat="@drawable/ic_audio"
+                        android:focusable="true" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="8dp"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:scrollbars="horizontal">
+
+                            <Button
+                                android:id="@+id/c1"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/c1"
+                                android:onClick="buttonColor" />
+
+                            <Button
+                                android:id="@+id/c2"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/c2"
+                                android:onClick="buttonColor" />
+
+                            <Button
+                                android:id="@+id/c3"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/c3"
+                                android:onClick="buttonColor" />
+
+                            <Button
+                                android:id="@+id/c4"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/c4"
+                                android:onClick="buttonColor" />
+
+                            <Button
+                                android:id="@+id/c5"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/c5"
+                                android:onClick="buttonColor" />
+
+                            <Button
+                                android:id="@+id/c6"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/c6"
+                                android:onClick="buttonColor" />
+
+                            <Button
+                                android:id="@+id/c7"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/c7"
+                                android:onClick="buttonColor" />
+
+                            <Button
+                                android:id="@+id/c8"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/c8"
+                                android:onClick="buttonColor" />
+
+                            <Button
+                                android:id="@+id/c9"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/c9"
+                                android:onClick="buttonColor" />
+
+                            <Button
+                                android:id="@+id/c10"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/c10"
+                                android:onClick="buttonColor" />
+
+                            <Button
+                                android:id="@+id/white"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/button"
+                                android:backgroundTint="@color/white"
+                                android:onClick="buttonColor" />
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar_footer_edit"
+                        style="ToolbarTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp" />
+
                 </LinearLayout>
 
-            </HorizontalScrollView>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-</LinearLayout>
+
+</ScrollView>
+

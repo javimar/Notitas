@@ -7,9 +7,10 @@
     android:minHeight="110dp"
     android:minWidth="110dp"
     android:minResizeHeight="110dp"
-    android:minResizeWidth="40dp"
+    android:minResizeWidth="110dp"
     android:updatePeriodMillis="86400000"
     android:initialLayout="@layout/widget_detail_list_item"
     android:resizeMode="horizontal|vertical"
+    android:previewImage="@drawable/screen_capture"
     android:widgetCategory="home_screen">
 </appwidget-provider>

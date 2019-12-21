@@ -15,7 +15,7 @@ import eu.javimar.notitas.view.NotaDetailActivity;
 
 public class NotitasWidgetProvider extends AppWidgetProvider
 {
-    public static final String WIDGET_ITEM_CLICK_ACTION = "widget_item_click_action";
+    private static final String WIDGET_ITEM_CLICK_ACTION = "widget_item_click_action";
 
     // Called when the BroadcastReceiver receives an Intent broadcast.
     @Override
