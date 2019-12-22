@@ -70,11 +70,11 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
             aux = mNotasList.get(position).getNotaEtiqueta();
             if(aux == null || aux.equals(""))
             {
-                holder.label.setVisibility(GONE);
+                holder.displayTag.setVisibility(GONE);
             }
             else
             {
-                holder.label.setVisibility(View.VISIBLE);
+                holder.displayTag.setVisibility(View.VISIBLE);
                 holder.label.setText(mNotasList.get(position).getNotaEtiqueta());
                 holder.displayTag
                         .setCardBackgroundColor(Color.parseColor(mNotasList

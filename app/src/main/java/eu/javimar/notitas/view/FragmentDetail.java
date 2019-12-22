@@ -79,10 +79,13 @@ public class FragmentDetail extends Fragment
             body.setText(nota.getNotaCuerpo());
 
             String label = nota.getNotaEtiqueta();
-            if(label == null || label.isEmpty()) etiqueta.setVisibility(GONE);
+            if(label == null || label.isEmpty())
+            {
+                labelCard.setVisibility(GONE);
+            }
             else
             {
-                etiqueta.setVisibility(View.VISIBLE);
+                labelCard.setVisibility(View.VISIBLE);
                 etiqueta.setText(nota.getNotaEtiqueta());
             }
 

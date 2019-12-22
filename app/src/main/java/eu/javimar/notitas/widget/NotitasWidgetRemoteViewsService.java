@@ -99,6 +99,11 @@ public class NotitasWidgetRemoteViewsService extends RemoteViewsService
                 }
             }
 
+            if(allNotas.get(position).getNotaUriAudio() != null)
+                remoteViews.setViewVisibility(R.id.widget_nota_audio, VISIBLE);
+            else
+                remoteViews.setViewVisibility(R.id.widget_nota_audio, GONE);
+
             remoteViews.setTextColor(R.id.widget_list, Color.parseColor(
                     allNotas.get(position).getNotaColor()));
             remoteViews.setInt(R.id.widget_nota_title,"setTextColor",
