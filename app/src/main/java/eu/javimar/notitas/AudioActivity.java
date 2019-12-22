@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
-import static eu.javimar.notitas.util.Utils.isUriPointingToValidResource;
+import static eu.javimar.notitas.util.Utils.isContentUriPointingToValidResource;
 
 @SuppressLint("DefaultLocale")
 public class AudioActivity extends AppCompatActivity
@@ -52,7 +52,7 @@ public class AudioActivity extends AppCompatActivity
         seekBar.setClickable(false);
         buttonPause.setEnabled(false);
 
-        if(!isUriPointingToValidResource(getIntent().getData(), this))
+        if(!isContentUriPointingToValidResource(getIntent().getData(), this))
         {
             Toasty.error(this, R.string.err_audio_resource_not_valid,
                     Toast.LENGTH_SHORT).show();

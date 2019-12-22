@@ -54,7 +54,7 @@ import eu.javimar.notitas.util.ColorButton;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
-import static eu.javimar.notitas.util.Utils.isUriPointingToValidResource;
+import static eu.javimar.notitas.util.Utils.isInternalUriPointingToValidResource;
 import static eu.javimar.notitas.util.Utils.refreshWidget;
 
 public class EditNota extends AppCompatActivity
@@ -165,10 +165,9 @@ public class EditNota extends AppCompatActivity
             {
                 addImage.setVisibility(View.VISIBLE);
                 // check first if resource was deleted
-                if(!isUriPointingToValidResource(Uri.parse(mImageUri), this))
+
+                if(!isInternalUriPointingToValidResource(Uri.parse(mImageUri), this))
                 {
-                    Toasty.error(this, R.string.err_image_resource_not_valid,
-                            Toast.LENGTH_SHORT).show();
                     Glide
                             .with(this)
                             .load(R.drawable.no_image)
@@ -340,7 +339,7 @@ public class EditNota extends AppCompatActivity
                     {
                         fos = new FileOutputStream(imageFile);
                         // Use the compress method on the Bitmap object to write image to the OutputStream
-                        image.compress(Bitmap.CompressFormat.PNG, 60, fos);
+                        image.compress(Bitmap.CompressFormat.JPEG, 50, fos);
                     } catch (Exception e) { e.printStackTrace(); }
                     finally
                     {
@@ -348,7 +347,7 @@ public class EditNota extends AppCompatActivity
                     }
                     addImage.setVisibility(View.VISIBLE);
                     addImage.setImageBitmap(image);
-                    mImageUri = imageFile.getAbsolutePath();
+                    mImageUri = imageFile.getPath();
                     break;
             }
         }

@@ -13,6 +13,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import eu.javimar.notitas.R;
 import eu.javimar.notitas.widget.NotitasWidgetProvider;
@@ -49,7 +50,7 @@ public final class Utils
         return dp;
     }
 
-    public static boolean isUriPointingToValidResource(Uri uri, Context context)
+    public static boolean isContentUriPointingToValidResource(Uri uri, Context context)
     {
         boolean valid = false;
 
@@ -67,20 +68,27 @@ public final class Utils
                 {
                     valid = true;
                 }
-                else
-                {
-                    // File was not found
-                }
-            }
-            else
-            {
-                // Uri was ok but no entry found.
             }
             cur.close();
         }
-        else
+        return valid;
+    }
+
+    public static boolean isInternalUriPointingToValidResource(Uri uri, Context context)
+    {
+        boolean valid = true;
+
+        if(!uri.toString().startsWith("file"))
         {
-            // content Uri was invalid or some other error occurred
+            uri = Uri.fromFile(new File(uri.toString()));
+        }
+        try
+        {
+            context.getContentResolver().openInputStream(uri);
+        }
+        catch (FileNotFoundException e)
+        {
+            valid = false;
         }
         return valid;
     }

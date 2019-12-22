@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -22,7 +21,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 import eu.javimar.notitas.R;
 import eu.javimar.notitas.listeners.NotasItemClickListener;
 import eu.javimar.notitas.model.Nota;
@@ -30,7 +28,7 @@ import eu.javimar.notitas.util.BitmapScaler;
 
 import static android.view.View.GONE;
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
-import static eu.javimar.notitas.util.Utils.isUriPointingToValidResource;
+import static eu.javimar.notitas.util.Utils.isInternalUriPointingToValidResource;
 
 public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHolder>
 {
@@ -101,10 +99,8 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
             {
                 holder.image.setVisibility(View.VISIBLE);
 
-                if(!isUriPointingToValidResource(Uri.parse(aux), mContext))
+                if(!isInternalUriPointingToValidResource(Uri.parse(aux), mContext))
                 {
-                    Toasty.error(mContext, R.string.err_image_resource_not_valid,
-                            Toast.LENGTH_SHORT).show();
                     Glide
                             .with(mContext)
                             .load(R.drawable.no_image)

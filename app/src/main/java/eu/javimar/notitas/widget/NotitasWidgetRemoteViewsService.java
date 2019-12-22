@@ -21,7 +21,7 @@ import eu.javimar.notitas.util.BitmapScaler;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
-import static eu.javimar.notitas.util.Utils.isUriPointingToValidResource;
+import static eu.javimar.notitas.util.Utils.isInternalUriPointingToValidResource;
 
 public class NotitasWidgetRemoteViewsService extends RemoteViewsService
 {
@@ -84,7 +84,7 @@ public class NotitasWidgetRemoteViewsService extends RemoteViewsService
             }
             else
             {
-                if(isUriPointingToValidResource(Uri
+                if(isInternalUriPointingToValidResource(Uri
                         .parse(uri), getApplicationContext()))
                 {
                     remoteViews.setViewVisibility(R.id.widget_nota_image, VISIBLE);

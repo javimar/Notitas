@@ -35,7 +35,7 @@ import eu.javimar.notitas.util.BitmapScaler;
 
 import static android.view.View.GONE;
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
-import static eu.javimar.notitas.util.Utils.isUriPointingToValidResource;
+import static eu.javimar.notitas.util.Utils.isInternalUriPointingToValidResource;
 
 public class FragmentDetail extends Fragment
 {
@@ -94,7 +94,7 @@ public class FragmentDetail extends Fragment
             {
                 notaImage.setVisibility(View.VISIBLE);
                 // check first if resource was deleted
-                if(!isUriPointingToValidResource(Uri
+                if(!isInternalUriPointingToValidResource(Uri
                         .parse(nota.getNotaUriImage()), getActivity()))
                 {
                     Toasty.error(getActivity(), R.string.err_image_resource_not_valid,
