@@ -17,7 +17,7 @@ public interface NotasDao
     @Insert
     long insert(Nota nota);
 
-    @Query("SELECT * FROM notas ORDER BY notaTitulo ASC")
+    @Query("SELECT * FROM notas ORDER BY notaId")
     LiveData<List<Nota>> getAllNotasSorted();
 
     @Query("SELECT * FROM notas WHERE notaId = :id")
@@ -33,6 +33,6 @@ public interface NotasDao
             "OR notaCuerpo LIKE :query ORDER BY notaTitulo ASC")
     List<Nota> getSearchResults(String query);
 
-    @Query("SELECT * FROM notas ORDER BY notaTitulo ASC")
+    @Query("SELECT * FROM notas")
     List<Nota> getAllNotasForWidget();
 }

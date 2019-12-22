@@ -9,13 +9,15 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.javimar.notitas.R;
-import eu.javimar.notitas.listeners.NotasItemClickListener;
+import eu.javimar.notitas.interfaces.NotasItemClickListener;
+import eu.javimar.notitas.util.SimpleItemTouchHelperCallback;
 import eu.javimar.notitas.view.adapter.NotasAdapter;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
@@ -51,6 +53,12 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
                 StaggeredGridLayoutManager.VERTICAL));
         mNotasAdapter = new NotasAdapter(this,getActivity());
         mRecyclerView.setAdapter(mNotasAdapter);
+
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(mNotasAdapter, getActivity());
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mRecyclerView);
+
         observerSetup();
     }
 

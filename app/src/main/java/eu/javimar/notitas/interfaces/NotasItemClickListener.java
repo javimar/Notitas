@@ -1,4 +1,4 @@
-package eu.javimar.notitas.listeners;
+package eu.javimar.notitas.interfaces;
 
 public interface NotasItemClickListener
 {
