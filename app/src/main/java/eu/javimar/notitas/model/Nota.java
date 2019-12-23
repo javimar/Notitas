@@ -19,22 +19,22 @@ public class Nota implements Parcelable
     private int notaId;
 
     @ColumnInfo(name = "notaTitulo")
-    private final String notaTitulo;
+    private String notaTitulo;
 
     @ColumnInfo(name = "notaCuerpo")
-    private final String notaCuerpo;
+    private String notaCuerpo;
 
     @ColumnInfo(name = "notaEtiqueta")
-    private final String notaEtiqueta;
+    private String notaEtiqueta;
 
     @ColumnInfo(name = "notaColor")
-    private final String notaColor;
+    private String notaColor;
 
     @ColumnInfo(name = "notaUriImage")
-    private final String notaUriImage;
+    private String notaUriImage;
 
     @ColumnInfo(name = "notaUriAudio")
-    private final String notaUriAudio;
+    private String notaUriAudio;
 
     public Nota(int notaId, String notaTitulo, String notaCuerpo,
                 String notaEtiqueta, String notaColor, String notaUriImage,
@@ -88,6 +88,30 @@ public class Nota implements Parcelable
 
     public String getNotaUriAudio() {
         return notaUriAudio;
+    }
+
+    public void setNotaCuerpo(String notaCuerpo) {
+        this.notaCuerpo = notaCuerpo;
+    }
+
+    public void setNotaEtiqueta(String notaEtiqueta) {
+        this.notaEtiqueta = notaEtiqueta;
+    }
+
+    public void setNotaColor(String notaColor) {
+        this.notaColor = notaColor;
+    }
+
+    public void setNotaUriImage(String notaUriImage) {
+        this.notaUriImage = notaUriImage;
+    }
+
+    public void setNotaUriAudio(String notaUriAudio) {
+        this.notaUriAudio = notaUriAudio;
+    }
+
+    public void setNotaTitulo(String notaTitulo) {
+        this.notaTitulo= notaTitulo;
     }
 
     @Override

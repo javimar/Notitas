@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -28,22 +30,27 @@ import eu.javimar.notitas.interfaces.ItemTouchHelperViewHolder;
 import eu.javimar.notitas.interfaces.NotasItemClickListener;
 import eu.javimar.notitas.model.Nota;
 import eu.javimar.notitas.util.BitmapScaler;
+import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
 import static android.view.View.GONE;
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
 import static eu.javimar.notitas.util.Utils.isInternalUriPointingToValidResource;
+import static eu.javimar.notitas.util.Utils.refreshWidget;
 
 public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHolder>
     implements ItemTouchHelperAdapter
 {
     private List<Nota> mNotasList;
     private final NotasItemClickListener mOnClickListener;
-    private Context mContext;
+    private final Context mContext;
+    private final NotitasViewModel mViewModel;
 
     public NotasAdapter(NotasItemClickListener listener, Context context)
     {
         mContext = context;
         mOnClickListener = listener;
+        mViewModel = new ViewModelProvider((FragmentActivity)context)
+                .get(NotitasViewModel.class);
     }
 
     public void setNotasList(List<Nota> notasList)
@@ -124,7 +131,6 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
                             .load(scaleImage)
                             .error(R.drawable.no_image)
                             .into(holder.image);
-
                 }
             }
             else
@@ -146,6 +152,8 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
         @BindView(R.id.nota_image) ImageView image;
         @BindView(R.id.nota_audio) ImageView audio;
 
+        private int position;
+
         NotasViewHolder(View itemView)
         {
             super(itemView);
@@ -162,13 +170,30 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
         public void onItemSelected()
         {
             itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+            position = getAdapterPosition();
         }
 
         @Override
-        public void onItemClear()
+        public void onItemClear(int from, int to)
         {
-            itemView.setBackgroundColor(Color.parseColor(mNotasList
-                    .get(getAdapterPosition()).getNotaColor()));
+            if(position == from)
+            {
+                // item did not move, just release
+                itemView.setBackgroundColor(Color.parseColor(mNotasList
+                        .get(getAdapterPosition()).getNotaColor()));
+            }
+            else
+            {
+                // item moved
+                itemView.setBackgroundColor(Color.parseColor(mNotasList
+                        .get(from).getNotaColor()));
+
+                // update DB to persit changes of the 2 elements dragged
+                mViewModel.swapNotas(getNotaId(from), getNotaId(to));
+
+                // refresh widget
+                refreshWidget(mContext);
+            }
         }
     }
 
@@ -186,7 +211,6 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
     {
         return mNotasList == null ? 0 : mNotasList.size();
     }
-
 
     @Override
     public void onItemDismiss(int position) // won't use for now

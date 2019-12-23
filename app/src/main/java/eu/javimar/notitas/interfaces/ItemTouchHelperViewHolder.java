@@ -13,5 +13,5 @@ public interface ItemTouchHelperViewHolder
      * Called when the ItemTouchHelper has completed the
      * move or swipe, and the active item state should be cleared.
      */
-    void onItemClear();
+    void onItemClear(int fromPosition, int toPosition);
 }

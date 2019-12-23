@@ -54,4 +54,10 @@ public class NotitasViewModel extends AndroidViewModel
     {
         repository.updateNota(nota);
     }
+
+    public void swapNotas(int current, int newId)
+    {
+        repository.swapNotas(current, newId);
+    }
+
 }

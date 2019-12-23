@@ -55,7 +55,7 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
         mRecyclerView.setAdapter(mNotasAdapter);
 
         ItemTouchHelper.Callback callback =
-                new SimpleItemTouchHelperCallback(mNotasAdapter, getActivity());
+                new SimpleItemTouchHelperCallback(mNotasAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(mRecyclerView);
 

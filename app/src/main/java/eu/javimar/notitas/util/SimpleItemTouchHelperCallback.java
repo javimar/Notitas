@@ -1,6 +1,5 @@
 package eu.javimar.notitas.util;
 
-import android.content.Context;
 import android.graphics.Canvas;
 
 import androidx.annotation.NonNull;
@@ -10,16 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import eu.javimar.notitas.interfaces.ItemTouchHelperAdapter;
 import eu.javimar.notitas.interfaces.ItemTouchHelperViewHolder;
 
-import static eu.javimar.notitas.util.Utils.refreshWidget;
-
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback
 {
     private final ItemTouchHelperAdapter mAdapter;
-    private final Context mContext;
+    private int toPosition;
 
-    public SimpleItemTouchHelperCallback(ItemTouchHelperAdapter adapter, Context context)
+    public SimpleItemTouchHelperCallback(ItemTouchHelperAdapter adapter)
     {
-        mContext = context;
         mAdapter = adapter;
     }
 
@@ -52,7 +48,8 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback
         mAdapter.onItemMove(viewHolder.getAdapterPosition(),
                 target.getAdapterPosition());
 
-        refreshWidget(mContext);
+        // save destination position to use in onItemClear
+        toPosition = target.getAdapterPosition();
 
         return true;
     }
@@ -62,7 +59,6 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback
     {
         // mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
-
 
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder,
@@ -91,7 +87,8 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback
         {
             ItemTouchHelperViewHolder itemViewHolder =
                     (ItemTouchHelperViewHolder) viewHolder;
-            itemViewHolder.onItemClear();
+            itemViewHolder.onItemClear(viewHolder.getAdapterPosition(),
+                    toPosition);
         }
     }
 

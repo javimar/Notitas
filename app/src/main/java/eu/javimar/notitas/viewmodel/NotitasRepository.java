@@ -106,10 +106,7 @@ class NotitasRepository
         }
     }
 
-
-    /**
-     * SEARCH FUNCTIONALITY
-     */
+    // SEARCH FUNCTIONALITY
     private final MutableLiveData<List<Nota>> searchQueryResults = new MutableLiveData<>();
     private void asyncSearchFinished(List<Nota> queryResults) { searchQueryResults.setValue(queryResults); }
     MutableLiveData<List<Nota>> getSearchQueryResults() { return searchQueryResults; }
@@ -136,6 +133,26 @@ class NotitasRepository
         protected void onPostExecute(List<Nota> nota)
         {
             delegate.asyncSearchFinished(nota);
+        }
+    }
+
+    // UPDATE ID LOGIC WHEN DRAGGING ELEMENTS
+    void swapNotas(int current, int newId)
+    {
+        UpdateIdAsyncTask task = new UpdateIdAsyncTask(notasDao);
+        task.execute(current, newId );
+    }
+    private static class UpdateIdAsyncTask extends AsyncTask<Integer, Void, Void>
+    {
+        private final NotasDao asyncTaskDao;
+        UpdateIdAsyncTask(NotasDao dao) {
+            asyncTaskDao = dao;
+        }
+        @Override
+        protected Void doInBackground(Integer... ids)
+        {
+            asyncTaskDao.swapNotas(ids[0], ids[1]);
+            return null;
         }
     }
 }
