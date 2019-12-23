@@ -31,7 +31,7 @@ public abstract class NotasDao
     public abstract void updateNote(Nota nota);
 
     @Query("SELECT * FROM notas WHERE notaTitulo LIKE :query " +
-            "OR notaCuerpo LIKE :query ORDER BY notaTitulo ASC")
+            "OR notaCuerpo LIKE :query OR notaEtiqueta LIKE :query ORDER BY notaTitulo ASC")
     public abstract List<Nota> getSearchResults(String query);
 
     @Query("SELECT * FROM notas ORDER BY notaId")
