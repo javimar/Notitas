@@ -7,7 +7,7 @@
     android:id="@+id/cardNotaDisplay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="6dp"
+    app:cardCornerRadius="10dp"
     android:layout_margin="8dp" >
 
     <androidx.constraintlayout.widget.ConstraintLayout

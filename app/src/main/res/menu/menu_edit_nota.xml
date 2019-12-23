@@ -17,4 +17,11 @@
         android:icon="@drawable/ic_delete"
         app:showAsAction="collapseActionView|ifRoom" />
 
+    <item
+        android:id="@+id/action_share_nota"
+        android:title="@string/menu_item_sharenota"
+        android:orderInCategory="130"
+        android:icon="@drawable/ic_share"
+        app:showAsAction="collapseActionView|ifRoom" />
+
 </menu>

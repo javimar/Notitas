@@ -169,25 +169,33 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
         @Override
         public void onItemSelected()
         {
-            itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+            displayNota.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+            displayTag.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
             position = getAdapterPosition();
+            displayNota.setCardElevation(8);
+            displayNota.setRadius(10);
         }
 
         @Override
         public void onItemClear(int from, int to)
         {
+            displayNota.setRadius(10);
             if(position == from)
             {
                 // item did not move, just release
-                itemView.setBackgroundColor(Color.parseColor(mNotasList
+                displayNota.setBackgroundColor(Color.parseColor(mNotasList
+                        .get(getAdapterPosition()).getNotaColor()));
+                displayTag.setBackgroundColor(Color.parseColor(mNotasList
                         .get(getAdapterPosition()).getNotaColor()));
             }
             else
             {
                 // item moved
-                itemView.setBackgroundColor(Color.parseColor(mNotasList
+                displayNota.setBackgroundColor(Color.parseColor(mNotasList
                         .get(from).getNotaColor()));
-
+                displayTag.setBackgroundColor(Color.parseColor(mNotasList
+                        .get(from).getNotaColor()));
+                displayNota.setCardElevation(0);
                 // update DB to persit changes of the 2 elements dragged
                 mViewModel.swapNotas(getNotaId(from), getNotaId(to));
 

@@ -1,6 +1,7 @@
 package eu.javimar.notitas.view;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,8 +88,46 @@ public class NotaDetailActivity extends AppCompatActivity
             case R.id.action_delete_nota:
                 showDeleteConfirmationDialog();
                 break;
+            case R.id.action_share_nota:
+                shareNota();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void shareNota()
+    {
+        String nota = getString(R.string.share_intro) + "\n" +
+                mNota.getNotaTitulo() +
+                "\n" + mNota.getNotaCuerpo();
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+
+        if(mNota.getNotaUriImage() != null) // image nota
+        {
+            String imageUri = mNota.getNotaUriImage();
+            if(!imageUri.startsWith("file"))
+            {
+                imageUri = Uri.fromFile(new File(imageUri)).toString();
+            }
+            Uri pictureUri = Uri.parse(imageUri);
+            sendIntent.setType("image/*");
+            sendIntent.putExtra(Intent.EXTRA_STREAM, pictureUri);
+            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        else if(mNota.getNotaUriAudio() != null) // audio nota
+        {
+            Uri audioUri = Uri.parse(mNota.getNotaUriAudio());
+            sendIntent.setType("audio/*");
+            sendIntent.putExtra(Intent.EXTRA_STREAM, audioUri);
+            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        else sendIntent.setType("text/plain");
+
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.share_title);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, nota);
+        Intent shareIntent = Intent.createChooser(sendIntent, getString(R.string.share_intent));
+        startActivity(shareIntent);
     }
 
     private void showDeleteConfirmationDialog()

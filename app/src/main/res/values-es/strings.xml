@@ -8,7 +8,7 @@
     <string name="err_title_missing">El título es obligatorio</string>
     <string name="menu_item_deletenota">Borrar Nota</string>
     <string name="menu_item_editnota">Editar Nota</string>
-    <string name="menu_item_savenota">Guardar Nota</string>
+    <string name="menu_item_savenota">Guardar</string>
     <string name="menu_search">Búsqueda</string>
     <string name="no_notes_found">La búsqueda no devolvió ningún resultado</string>
     <string name="notas_cuerpo">Añadir descripción (opcional)</string>
@@ -28,4 +28,8 @@
     <string name="need_audio_permission">No se puede grabar audio si no se habilita el permiso</string>
     <string name="err_audio_resource_not_valid">El recurso de audio no es válido. Puede haber sido borrado.</string>
     <string name="err_image_resource_not_valid">El recurso de imagen no es válido. Puede haber sido borrado.</string>
+    <string name="menu_item_sharenota">Compartir</string>
+    <string name="share_intent">Compartiendo tu Nota</string>
+    <string name="share_intro">Quiero compartir esta nota</string>
+    <string name="share_title">Compartir Nota</string>
 </resources>
