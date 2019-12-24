@@ -109,7 +109,6 @@ public class FragmentDetail extends Fragment
                 }
                 else
                 {
-
                     // scale it to fit the width
                     Bitmap scaleImage = BitmapScaler
                             .scaleToFitWidth(
@@ -122,6 +121,19 @@ public class FragmentDetail extends Fragment
                             .load(scaleImage)
                             .error(R.drawable.no_image)
                             .into(notaImage);
+
+                    // add onClick to display full image
+                    notaImage.setOnClickListener(view ->
+                    {
+                        String uri = nota.getNotaUriImage();
+                        if(uri.startsWith("file"))
+                            uri = uri.replace("file:///","");
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.setDataAndType(Uri.parse(uri),
+                                "image/*");
+                        startActivity(intent);
+                    });
                 }
             }
 

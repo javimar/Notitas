@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -106,11 +107,15 @@ public class NotaDetailActivity extends AppCompatActivity
         if(mNota.getNotaUriImage() != null) // image nota
         {
             String imageUri = mNota.getNotaUriImage();
-            if(!imageUri.startsWith("file"))
+
+            if(imageUri.startsWith("file"))
             {
-                imageUri = Uri.fromFile(new File(imageUri)).toString();
+                imageUri = imageUri.replace("file:///","");
             }
-            Uri pictureUri = Uri.parse(imageUri);
+
+            Uri pictureUri = FileProvider.getUriForFile(this,
+                    getApplicationContext().getPackageName(), new File(imageUri));
+
             sendIntent.setType("image/*");
             sendIntent.putExtra(Intent.EXTRA_STREAM, pictureUri);
             sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
