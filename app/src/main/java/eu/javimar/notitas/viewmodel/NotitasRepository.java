@@ -24,7 +24,7 @@ class NotitasRepository
         return allNotasSorted;
     }
 
-    NotitasRepository(Application application)
+    public NotitasRepository(Application application)
     {
         MiBaseDatosNotas db;
         db = MiBaseDatosNotas.getDatabase(application);

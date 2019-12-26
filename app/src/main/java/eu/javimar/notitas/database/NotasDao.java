@@ -37,6 +37,9 @@ public abstract class NotasDao
     @Query("SELECT * FROM notas ORDER BY notaId")
     public abstract List<Nota> getAllNotasForWidget();
 
+    @Query("UPDATE notas SET notaReminderDate = '', notaReminderOn = 0 WHERE notaId = :id")
+    public abstract void resetNotasAfterReminder(int id);
+
     @Transaction
     public void swapNotas(int i1, int i2)
     {
@@ -63,6 +66,12 @@ public abstract class NotasDao
         temp = n1.getNotaUriImage();
         n1.setNotaUriImage(n2.getNotaUriImage());
         n2.setNotaUriImage(temp);
+        temp = n1.getNotaReminderDate();
+        n1.setNotaReminderDate(n2.getNotaReminderDate());
+        n2.setNotaReminderDate(temp);
+        int i = n1.getNotaReminderOn();
+        n1.setNotaReminderOn(n2.getNotaReminderOn());
+        n2.setNotaReminderOn(i);
 
         updateNote(n1);
         updateNote(n2);

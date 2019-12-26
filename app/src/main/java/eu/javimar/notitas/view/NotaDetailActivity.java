@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +19,14 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import eu.javimar.notitas.EditNota;
 import eu.javimar.notitas.R;
 import eu.javimar.notitas.model.Nota;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
-import static eu.javimar.notitas.util.Utils.refreshWidget;
+import static eu.javimar.notitas.util.HelperUtils.cancelReminder;
+import static eu.javimar.notitas.util.HelperUtils.refreshWidget;
 
 public class NotaDetailActivity extends AppCompatActivity
 {
@@ -145,9 +148,17 @@ public class NotaDetailActivity extends AppCompatActivity
         {
             // User clicked the "Delete" button, so delete the notaCard.
             mViewModel.deleteNota(mNotaId);
+            Toasty.info(this, getString(R.string.nota_deleted),
+                    Toast.LENGTH_SHORT).show();
+
             // Update the widget with fresh data when deleting
             refreshWidget(this);
 
+            // delete reminder if there is any
+            if(mNota.getNotaReminderOn() == 1)
+            {
+                cancelReminder(this, mNota.getNotaTitulo(), true);
+            }
             finish();
         });
         builder.setNegativeButton(android.R.string.cancel, (dialog, id) ->

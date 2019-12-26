@@ -1,9 +1,12 @@
 package eu.javimar.notitas.util;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Point;
 import android.net.Uri;
@@ -11,14 +14,17 @@ import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import es.dmoral.toasty.Toasty;
 import eu.javimar.notitas.R;
+import eu.javimar.notitas.synch.ReminderReceiver;
 import eu.javimar.notitas.widget.NotitasWidgetProvider;
 
-public final class Utils
+public final class HelperUtils
 {
     public static void refreshWidget(Context context)
     {
@@ -91,5 +97,42 @@ public final class Utils
             valid = false;
         }
         return valid;
+    }
+
+    // Return a "unique" integer based on a String.
+    public static int getKeyFromStr(String string)
+    {
+        int key = 0;
+        for(int i = 0; i < string.length(); i++)
+        {
+            key = key + (int)string.charAt(i);
+        }
+        return key;
+    }
+
+    public static boolean int2Bool(int i)
+    {
+        return i == 1;
+    }
+
+    public static int bool2Int(boolean b)
+    {
+        if(b) return 1;
+        return 0;
+    }
+
+    public static void cancelReminder(Context context, String title,
+                                      boolean isNotaBeingDeleted)
+    {
+        int requestCode = getKeyFromStr(title);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, ReminderReceiver.class);
+        PendingIntent pendingIntent = PendingIntent
+                .getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
+
+        if(!isNotaBeingDeleted)
+            Toasty.info(context, context.getString(R.string.reminder_off),
+                    Toast.LENGTH_SHORT).show();
     }
 }

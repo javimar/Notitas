@@ -21,7 +21,7 @@ import eu.javimar.notitas.util.BitmapScaler;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
-import static eu.javimar.notitas.util.Utils.isInternalUriPointingToValidResource;
+import static eu.javimar.notitas.util.HelperUtils.isInternalUriPointingToValidResource;
 
 public class NotitasWidgetRemoteViewsService extends RemoteViewsService
 {

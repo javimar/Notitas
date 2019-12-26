@@ -36,9 +36,17 @@ public class Nota implements Parcelable
     @ColumnInfo(name = "notaUriAudio")
     private String notaUriAudio;
 
+    @ColumnInfo(name = "notaReminderOn")
+    private int notaReminderOn;
+
+    @ColumnInfo(name = "notaReminderDate")
+    private String notaReminderDate;
+
+
     public Nota(int notaId, String notaTitulo, String notaCuerpo,
-                String notaEtiqueta, String notaColor, String notaUriImage,
-                String notaUriAudio)
+                String notaEtiqueta, String notaColor,
+                String notaUriImage, String notaUriAudio,
+                int notaReminderOn, String notaReminderDate)
     {
         this.notaId = notaId;
         this.notaTitulo = notaTitulo;
@@ -47,12 +55,14 @@ public class Nota implements Parcelable
         this.notaColor = notaColor;
         this.notaUriImage = notaUriImage;
         this.notaUriAudio = notaUriAudio;
+        this.notaReminderOn = notaReminderOn;
+        this.notaReminderDate = notaReminderDate;
     }
 
     @Ignore
     public Nota(String notaTitulo, String notaCuerpo,
                 String notaEtiqueta, String notaColor, String notaUriImage,
-                String notaUriAudio)
+                String notaUriAudio, int notaReminderOn, String notaReminderDate)
     {
         this.notaTitulo = notaTitulo;
         this.notaCuerpo = notaCuerpo;
@@ -60,6 +70,8 @@ public class Nota implements Parcelable
         this.notaColor = notaColor;
         this.notaUriImage = notaUriImage;
         this.notaUriAudio = notaUriAudio;
+        this.notaReminderOn = notaReminderOn;
+        this.notaReminderDate = notaReminderDate;
     }
 
     public int getNotaId() {
@@ -114,6 +126,22 @@ public class Nota implements Parcelable
         this.notaTitulo= notaTitulo;
     }
 
+    public int getNotaReminderOn() {
+        return notaReminderOn;
+    }
+
+    public void setNotaReminderOn(int notaReminderOn) {
+        this.notaReminderOn = notaReminderOn;
+    }
+
+    public String getNotaReminderDate() {
+        return notaReminderDate;
+    }
+
+    public void setNotaReminderDate(String notaReminderDate) {
+        this.notaReminderDate = notaReminderDate;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -128,6 +156,8 @@ public class Nota implements Parcelable
         dest.writeString(this.notaColor);
         dest.writeString(this.notaUriImage);
         dest.writeString(this.notaUriAudio);
+        dest.writeInt(this.notaReminderOn);
+        dest.writeString(this.notaReminderDate);
     }
 
     protected Nota(Parcel in) {
@@ -138,6 +168,8 @@ public class Nota implements Parcelable
         this.notaColor = in.readString();
         this.notaUriImage = in.readString();
         this.notaUriAudio = in.readString();
+        this.notaReminderOn= in.readInt();
+        this.notaReminderDate= in.readString();
     }
 
     public static final Parcelable.Creator<Nota> CREATOR = new Parcelable.Creator<Nota>() {

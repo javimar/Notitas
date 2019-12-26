@@ -17,7 +17,6 @@ public class NotitasViewModel extends AndroidViewModel
     private final LiveData<List<Nota>> allNotasSorted;
     private final MutableLiveData<List<Nota>> searchQueryResults;
 
-
     public NotitasViewModel(@NonNull Application application)
     {
         super(application);
@@ -59,5 +58,4 @@ public class NotitasViewModel extends AndroidViewModel
     {
         repository.swapNotas(current, newId);
     }
-
 }

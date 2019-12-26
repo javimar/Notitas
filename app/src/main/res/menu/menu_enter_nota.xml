@@ -7,6 +7,13 @@
         android:title="@string/menu_item_savenota"
         android:orderInCategory="110"
         android:icon="@drawable/ic_note_add"
-        app:showAsAction="collapseActionView|ifRoom" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_add_reminder"
+        android:title="@string/menu_item_addalarm"
+        android:orderInCategory="120"
+        android:icon="@drawable/ic_alarm_add"
+        app:showAsAction="ifRoom" />
 
 </menu>

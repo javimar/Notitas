@@ -34,8 +34,8 @@ import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
 import static android.view.View.GONE;
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
-import static eu.javimar.notitas.util.Utils.isInternalUriPointingToValidResource;
-import static eu.javimar.notitas.util.Utils.refreshWidget;
+import static eu.javimar.notitas.util.HelperUtils.isInternalUriPointingToValidResource;
+import static eu.javimar.notitas.util.HelperUtils.refreshWidget;
 
 public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHolder>
     implements ItemTouchHelperAdapter
@@ -137,6 +137,15 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
             {
                 holder.image.setVisibility(GONE);
             }
+
+            if(mNotasList.get(position).getNotaReminderOn() == 1)
+            {
+                holder.reminder.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                holder.reminder.setVisibility(GONE);
+            }
         }
     }
 
@@ -151,6 +160,7 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
         @BindView(R.id.cardViewTag) CardView displayTag;
         @BindView(R.id.nota_image) ImageView image;
         @BindView(R.id.nota_audio) ImageView audio;
+        @BindView(R.id.nota_reminder_set) ImageView reminder;
 
         private int position;
 

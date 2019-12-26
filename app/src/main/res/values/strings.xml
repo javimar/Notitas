@@ -12,6 +12,7 @@
     <string name="menu_item_deletenota">Delete Note</string>
     <string name="menu_item_editnota">Edit Note</string>
     <string name="menu_item_sharenota">Share Nota</string>
+    <string name="menu_item_addalarm">Add reminder</string>
     <string name="menu_search">Search</string>
     <string name="menu_item_photo">Photo</string>
     <string name="menu_item_audio">Audio</string>
@@ -32,6 +33,7 @@
     <string name="add_nota_success">Note added</string>
     <string name="add_nota_failed">Failed to add the note</string>
     <string name="update_nota_success">Note updated</string>
+    <string name="nota_deleted">Note deleted</string>
     <string name="cd_image" translatable="false">Image taken by the camera or chosen by user</string>
 
 
@@ -41,7 +43,7 @@
     <string name="err_audio_resource_not_valid">Audio resource is not valid anymore. It might have been deleted</string>
     <string name="err_image_resource_not_valid">Picture resource is not valid anymore. It might have been deleted</string>
 
-    <!-- BÚSQUEDA -->
+    <!-- SEARCH -->
     <string name="search_hint">Search in your notes</string>
     <string name="no_notes_found">Search returned no hits, try again…</string>
 
@@ -53,6 +55,15 @@
     <string name="share_intro">I wanted to share this nota:</string>
     <string name="share_title">Share Note</string>
     <string name="share_intent">Sharing your Note…</string>
+
+    <!-- REMINDER -->
+    <string name="err_date_has_passed">Date is in the past. Reminder was not set!</string>
+    <string name="nota_date_picker_title">Choose reminder DATE</string>
+    <string name="nota_time_picker_title">Choose reminder TIME</string>
+    <string name="notification_title">Reminder!</string>
+    <string name="reminder_on">Reminder activated</string>
+    <string name="reminder_off">Reminder disabled</string>
+    <string name="notification_ows_event_message">Reminder for your Note: %1$s</string>
 
 
 </resources>

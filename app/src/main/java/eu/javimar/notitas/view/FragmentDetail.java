@@ -35,7 +35,7 @@ import eu.javimar.notitas.util.BitmapScaler;
 
 import static android.view.View.GONE;
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
-import static eu.javimar.notitas.util.Utils.isInternalUriPointingToValidResource;
+import static eu.javimar.notitas.util.HelperUtils.isInternalUriPointingToValidResource;
 
 public class FragmentDetail extends Fragment
 {
@@ -46,6 +46,8 @@ public class FragmentDetail extends Fragment
     @BindView(R.id.audioIcon) ImageView notaAudio;
     @BindView(R.id.cardViewNota) CardView notaCard;
     @BindView(R.id.cardViewLabel) CardView labelCard;
+    @BindView(R.id.cardViewReminderDisplay) CardView reminderCard;
+    @BindView(R.id.reminderDisplay) TextView reminder;
 
     // Activity views
     private Toolbar mToolbarDetail;
@@ -151,6 +153,14 @@ public class FragmentDetail extends Fragment
                         ));
             }
 
+            if(nota.getNotaReminderOn() == 1)
+            {
+                reminderCard.setVisibility(View.VISIBLE);
+                reminder.setText(nota.getNotaReminderDate());
+            }
+            else reminderCard.setVisibility(GONE);
+
+            reminderCard.setCardBackgroundColor(Color.parseColor(nota.getNotaColor()));
             notaCard.setCardBackgroundColor(Color.parseColor(nota.getNotaColor()));
             labelCard.setCardBackgroundColor(Color.parseColor(nota.getNotaColor()));
             setCollapsingBarColor(Color.parseColor(nota.getNotaColor()));

@@ -61,7 +61,7 @@ import butterknife.ButterKnife;
 import eu.javimar.notitas.view.FragmentNotaList;
 import eu.javimar.notitas.view.NotaDetailActivity;
 
-import static eu.javimar.notitas.util.Utils.getDpsFromDevice;
+import static eu.javimar.notitas.util.HelperUtils.getDpsFromDevice;
 
 public class MainActivity extends AppCompatActivity implements
         FragmentNotaList.OnNotaItemSelectedListener

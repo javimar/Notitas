@@ -79,9 +79,9 @@
 
                     <ImageView
                         android:id="@+id/addAudio"
-                        android:layout_width="60dp"
+                        android:layout_width="40dp"
                         android:clickable="true"
-                        android:layout_height="60dp"
+                        android:layout_height="40dp"
                         android:tint="@color/colorPrimaryDark"
                         android:contentDescription="@string/cd_image"
                         android:visibility="gone"
@@ -89,24 +89,66 @@
                         app:srcCompat="@drawable/ic_audio"
                         android:focusable="true" />
 
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewReminder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:strokeWidth="0.5dp"
+                        app:strokeColor="#000000"
+                        android:visibility="gone"
+                        android:onClick="deleteReminder"
+                        android:layout_marginBottom="16dp"
+                        app:cardCornerRadius="16dp" >
+                        <TextView
+                            android:id="@+id/reminder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_alarm_set"
+                            android:drawablePadding="8dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:padding="4dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            tools:text="1 ene.2020, 20:30"
+                            android:textSize="14sp"
+                            android:textStyle="italic" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
                     <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="?android:attr/buttonBarStyle"
                         android:paddingBottom="8dp"
                         android:scrollbars="none">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:padding="6dp"
                             android:orientation="horizontal"
                             android:scrollbars="horizontal">
+
+                            <Button
+                                android:id="@+id/white"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/circle"
+                                style="?android:buttonBarButtonStyle"
+                                android:foregroundTint="@color/white"
+                                android:onClick="buttonColor" />
 
                             <Button
                                 android:id="@+id/c1"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
+                                style="?android:buttonBarButtonStyle"
+                                android:background="@drawable/circle"
                                 android:backgroundTint="@color/c1"
                                 android:onClick="buttonColor" />
 
@@ -115,8 +157,9 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
+                                android:background="@drawable/circle"
                                 android:backgroundTint="@color/c2"
+                                style="?android:buttonBarButtonStyle"
                                 android:onClick="buttonColor" />
 
                             <Button
@@ -124,8 +167,9 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
+                                android:background="@drawable/circle"
                                 android:backgroundTint="@color/c3"
+                                style="?android:buttonBarButtonStyle"
                                 android:onClick="buttonColor" />
 
                             <Button
@@ -133,8 +177,9 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
+                                android:background="@drawable/circle"
                                 android:backgroundTint="@color/c4"
+                                style="?android:buttonBarButtonStyle"
                                 android:onClick="buttonColor" />
 
                             <Button
@@ -142,8 +187,9 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
+                                android:background="@drawable/circle"
                                 android:backgroundTint="@color/c5"
+                                style="?android:buttonBarButtonStyle"
                                 android:onClick="buttonColor" />
 
                             <Button
@@ -151,7 +197,8 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
+                                android:background="@drawable/circle"
+                                style="?android:buttonBarButtonStyle"
                                 android:backgroundTint="@color/c6"
                                 android:onClick="buttonColor" />
 
@@ -160,7 +207,8 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
+                                style="?android:buttonBarButtonStyle"
+                                android:background="@drawable/circle"
                                 android:backgroundTint="@color/c7"
                                 android:onClick="buttonColor" />
 
@@ -169,7 +217,8 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
+                                style="?android:buttonBarButtonStyle"
+                                android:background="@drawable/circle"
                                 android:backgroundTint="@color/c8"
                                 android:onClick="buttonColor" />
 
@@ -178,7 +227,8 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
+                                style="?android:buttonBarButtonStyle"
+                                android:background="@drawable/circle"
                                 android:backgroundTint="@color/c9"
                                 android:onClick="buttonColor" />
 
@@ -186,19 +236,12 @@
                                 android:id="@+id/c10"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                style="?android:buttonBarButtonStyle"
                                 android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
+                                android:background="@drawable/circle"
                                 android:backgroundTint="@color/c10"
                                 android:onClick="buttonColor" />
 
-                            <Button
-                                android:id="@+id/white"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_marginEnd="10dp"
-                                android:background="@drawable/button"
-                                android:backgroundTint="@color/white"
-                                android:onClick="buttonColor" />
                         </LinearLayout>
 
                     </HorizontalScrollView>

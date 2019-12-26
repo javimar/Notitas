@@ -1,6 +1,9 @@
 package eu.javimar.notitas;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,9 +20,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,29 +41,44 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.LocalTime;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 import eu.javimar.notitas.model.Nota;
+import eu.javimar.notitas.synch.ReminderReceiver;
 import eu.javimar.notitas.util.BitmapScaler;
 import eu.javimar.notitas.util.ColorButton;
+import eu.javimar.notitas.util.MyBounceInterpolator;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
-import static eu.javimar.notitas.util.Utils.isInternalUriPointingToValidResource;
-import static eu.javimar.notitas.util.Utils.refreshWidget;
+import static eu.javimar.notitas.util.HelperUtils.bool2Int;
+import static eu.javimar.notitas.util.HelperUtils.cancelReminder;
+import static eu.javimar.notitas.util.HelperUtils.getKeyFromStr;
+import static eu.javimar.notitas.util.HelperUtils.int2Bool;
+import static eu.javimar.notitas.util.HelperUtils.isInternalUriPointingToValidResource;
+import static eu.javimar.notitas.util.HelperUtils.refreshWidget;
 
-public class EditNota extends AppCompatActivity
+public class EditNota extends AppCompatActivity implements
+        TimePickerDialog.OnTimeSetListener,
+        DatePickerDialog.OnDateSetListener
 {
     @BindView(R.id.addTitle) EditText addTitle;
     @BindView(R.id.addBody) EditText addBody;
@@ -69,19 +90,27 @@ public class EditNota extends AppCompatActivity
     @BindView(R.id.toolbar_footer_edit) Toolbar mFooter;
     @BindView(R.id.content) ScrollView mEdit_container;
     @BindView(R.id.collapse_toolbar_enter_nota) CollapsingToolbarLayout mCollapsingToolbarLayout;
+    @BindView(R.id.cardViewReminder) CardView reminderCard;
+    @BindView(R.id.reminder) TextView reminder;
+
+    private TimePickerDialog tpd;
 
     private static boolean sHaveReadPermission = false;
 
     private NotitasViewModel mViewModel;
     private boolean mNewNota;
     private Nota mNota;
-    private String mColor, mImageUri, mAudioUri;
+    private String mColor, mImageUri, mAudioUri, mReminderString;
     private String mPhotoFileName;
 
     private final static int REQUEST_AUDIO_PERMISSION = 900;
     private final static int CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE = 901;
     private final static int AUDIO_ACTIVITY_REQUEST_CODE = 902;
     private final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 903;
+
+    private boolean mReminderSet = false, mIsNewReminder = false;
+    private int[] mCalendar;
+    private LocalDateTime mReminderDateTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -132,20 +161,29 @@ public class EditNota extends AppCompatActivity
         {
             // Otherwise this is an existing notaCard, so change app bar to say Update
             setTitle(getString(R.string.title_update_nota));
-            // get the values to be updated
+            // get the values to be updated from DetailActivity
             mNota = getIntent().getParcelableExtra("nota");
             setScreenValues();
         }
+
+        mIsNewReminder = false;
     }
 
     public void buttonColor(View view)
     {
         int id = view.getId();
+
         int colorId = ColorButton.colorButton(id);
         mColor = "#" + Integer.toHexString(ContextCompat.getColor(this, colorId));
         notaCard.setBackgroundColor(Color.parseColor(mColor));
         setCollapsingBarColor(Color.parseColor(mColor));
         mEdit_container.setBackgroundColor(Color.parseColor(mColor));
+
+        final Animation scale_up_animation =
+                AnimationUtils.loadAnimation(this, R.anim.scale_animation);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        scale_up_animation.setInterpolator(interpolator);
+        view.startAnimation(scale_up_animation);
     }
 
     private void setScreenValues()
@@ -159,6 +197,18 @@ public class EditNota extends AppCompatActivity
             notaCard.setCardBackgroundColor(Color.parseColor(mColor));
             setCollapsingBarColor(Color.parseColor(mNota.getNotaColor()));
             mEdit_container.setBackgroundColor(Color.parseColor(mColor));
+            mReminderSet = int2Bool(mNota.getNotaReminderOn());
+
+            if(mReminderSet)
+            {
+                reminderCard.setVisibility(View.VISIBLE);
+                reminder.setText(mNota.getNotaReminderDate());
+                reminderCard.setCardBackgroundColor(Color.parseColor(mColor));
+            }
+            else
+            {
+                reminderCard.setVisibility(View.GONE);
+            }
 
             mImageUri = mNota.getNotaUriImage();
             if(mImageUri != null)
@@ -209,20 +259,100 @@ public class EditNota extends AppCompatActivity
     {
         int id = item.getItemId();
 
-        if(id == R.id.action_save_nota)
+        switch(id)
         {
-            validateNota();
-            return true;
+            case R.id.action_save_nota:
+                validateNota();
+                break;
+            case R.id.action_add_reminder:
+                addReminder();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addReminder()
+    {
+        setDateTimePicker();
+    }
+
+    public void deleteReminder(View view)
+    {
+        mReminderSet = false;
+        mIsNewReminder = false;
+        mReminderString = "";
+        reminderCard.setVisibility(View.GONE);
+
+        if (addTitle != null)
+            cancelReminder(this, addTitle.getText().toString(), false);
+    }
+
+    private void setDateTimePicker()
+    {
+        LocalDate today = LocalDate.now();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                this,
+                today.getYear(),
+                today.getMonthValue() - 1,
+                today.getDayOfMonth()
+        );
+
+        dpd.setMinDate(Calendar.getInstance());
+        dpd.setOkColor(getResources().getColor(R.color.colorPrimary));
+        dpd.setCancelColor(getResources().getColor(R.color.colorAccent));
+        dpd.setTitle(getString(R.string.nota_date_picker_title));
+
+        LocalTime now = LocalTime.now();
+        tpd = TimePickerDialog.newInstance(
+                this,
+                now.getHour(),
+                now.getMinute(),
+                true
+        );
+        tpd.setOkColor(getResources().getColor(R.color.colorPrimary));
+        tpd.setCancelColor(getResources().getColor(R.color.colorAccent));
+        tpd.setTitle(getString(R.string.nota_time_picker_title));
+
+        dpd.show(getSupportFragmentManager(), "dpd");
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth)
+    {
+        mCalendar = new int[6];
+        mCalendar[0] = year;
+        mCalendar[1] = monthOfYear + 1;
+        mCalendar[2] = dayOfMonth;
+
+        tpd.show(getSupportFragmentManager(), "tpd");
+    }
+
+    @Override
+    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second)
+    {
+        mCalendar[3] = hourOfDay;
+        mCalendar[4] = minute;
+        mCalendar[5] = 0; // seconds
+
+        mReminderSet = true;
+        reminderCard.setVisibility(View.VISIBLE);
+
+        mReminderDateTime =
+                LocalDateTime.of(mCalendar[0], mCalendar[1], mCalendar[2],
+                        mCalendar[3], mCalendar[4], mCalendar[5]);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM HH:mm");
+        mReminderString = mReminderDateTime.format(formatter);
+        reminder.setText(mReminderString);
+
+        // new reminder active, signal it
+        mIsNewReminder = true;
     }
 
     private void validateNota()
     {
         if(mColor == null) mColor = "#FFFFFF";
 
-        if(addTitle.getText().toString() == null ||
-                addTitle.getText().toString().isEmpty())
+        if(addTitle.getText().toString().isEmpty())
         {
             Toasty.error(this, getString(R.string.err_title_missing),
                     Toast.LENGTH_SHORT).show();
@@ -242,13 +372,19 @@ public class EditNota extends AppCompatActivity
                     addLabel.getText().toString().trim(),
                     mColor,
                     mImageUri,
-                    mAudioUri));
+                    mAudioUri,
+                    bool2Int(mReminderSet),
+                    mReminderString
+            ));
 
             if(row > 0)
             {
                 // Insertion was successful
                 Toasty.success(this, getString(R.string.add_nota_success),
                         Toast.LENGTH_SHORT).show();
+
+                // Activate Reminder
+                if(mReminderSet) startReminder((int)row);
             }
             else
             {
@@ -259,6 +395,10 @@ public class EditNota extends AppCompatActivity
         }
         else
         {
+            int id = mNota.getNotaId();
+            // reminder updated, did we change the reminder date?
+            if(mIsNewReminder) startReminder(id);
+
             mViewModel.updateNota(new Nota(
                     mNota.getNotaId(),
                     addTitle.getText().toString().trim(),
@@ -266,9 +406,10 @@ public class EditNota extends AppCompatActivity
                     addLabel.getText().toString().trim(),
                     mColor,
                     mImageUri,
-                    mAudioUri
+                    mAudioUri,
+                    bool2Int(mReminderSet),
+                    mReminderString
             ));
-            // Insertion was successful
             Toasty.success(this, getString(R.string.update_nota_success),
                     Toast.LENGTH_SHORT).show();
         }
@@ -331,8 +472,9 @@ public class EditNota extends AppCompatActivity
                     catch (FileNotFoundException e) { e.printStackTrace(); }
 
                     Bitmap image = BitmapFactory.decodeStream(input);
-                    String name = new SimpleDateFormat("yyyyMMdd_HHmmss",
-                            Locale.getDefault()).format(new Date()) + ".jpg";
+                    LocalDateTime date = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+                    String name = date.format(formatter) + ".jpg";
                     File imageFile = getPhotoFileUri(name);
                     FileOutputStream fos = null;
                     try
@@ -368,8 +510,9 @@ public class EditNota extends AppCompatActivity
 
     private void takePhoto()
     {
-        mPhotoFileName = new SimpleDateFormat("yyyyMMdd_HHmmss",
-                Locale.getDefault()).format(new Date()) + ".jpg";
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        mPhotoFileName = date.format(formatter) + ".jpg";
 
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -467,5 +610,38 @@ public class EditNota extends AppCompatActivity
                         Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void startReminder(int id)
+    {
+        if(mReminderDateTime.compareTo(LocalDateTime.now()) < 0)
+        {
+            Toasty.error(this, getString(R.string.err_date_has_passed),
+                    Toast.LENGTH_LONG).show();
+            mReminderSet = false;
+            reminderCard.setVisibility(View.GONE);
+            return;
+        }
+
+        String notaTitle = addTitle.getText().toString().trim();
+        int requestCode = getKeyFromStr(notaTitle);
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, ReminderReceiver.class);
+        intent.putExtra("header", getString(R.string.notification_title));
+        intent.putExtra("notaId", id);
+        intent.putExtra("msg",
+                (String.format(getString(R.string.notification_ows_event_message), notaTitle)));
+        intent.putExtra("requestCode", requestCode);
+        PendingIntent pendingIntent = PendingIntent
+                .getBroadcast(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Toasty.info(this, getString(R.string.reminder_on), Toast.LENGTH_SHORT).show();
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,
+                mReminderDateTime.atZone(ZoneId.of(TimeZone.getDefault()
+                        .getID())).toInstant().toEpochMilli(),
+                pendingIntent);
+        mCalendar = null;
     }
 }

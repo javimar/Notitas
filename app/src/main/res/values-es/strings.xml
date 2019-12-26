@@ -32,4 +32,13 @@
     <string name="share_intent">Compartiendo tu Nota</string>
     <string name="share_intro">Quiero compartir esta nota</string>
     <string name="share_title">Compartir Nota</string>
+    <string name="menu_item_addalarm">Añadir recordatorio</string>
+    <string name="err_date_has_passed">La fecha es pasada. Recordatorio anulado.</string>
+    <string name="nota_date_picker_title">Selecciona la fecha del recordatorio</string>
+    <string name="nota_time_picker_title">Selecciona la hora del recordatorio</string>
+    <string name="notification_ows_event_message">Recordatorio para la Nota: %1$s</string>
+    <string name="notification_title">¡Recordatorio!</string>
+    <string name="reminder_off">Recordatorio anulado</string>
+    <string name="reminder_on">Recordatorio activado</string>
+    <string name="nota_deleted">Nota borrada</string>
 </resources>

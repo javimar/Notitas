@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
-import static eu.javimar.notitas.util.Utils.isContentUriPointingToValidResource;
+import static eu.javimar.notitas.util.HelperUtils.isContentUriPointingToValidResource;
 
 @SuppressLint("DefaultLocale")
 public class AudioActivity extends AppCompatActivity
