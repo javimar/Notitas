@@ -25,46 +25,56 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/nota_audio"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/cd_image"
-            android:tint="@color/colorPrimaryDark"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_audio" />
-
-        <ImageView
-            android:id="@+id/nota_reminder_set"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+        <LinearLayout
+            android:id="@+id/icons_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:contentDescription="@string/cd_image"
-            android:tint="@color/colorPrimaryDark"
-            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_alarm_set" />
+            app:layout_constraintTop_toBottomOf="@+id/nota_image">
+
+            <ImageView
+                android:id="@+id/nota_audio"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/cd_image"
+                android:tint="@color/colorPrimaryDark"
+                android:paddingTop="3dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_audio"
+                tools:layout_editor_absoluteY="8dp" />
+
+            <ImageView
+                android:id="@+id/nota_reminder_set"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/cd_image"
+                android:tint="@color/colorPrimaryDark"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_alarm_set"
+                tools:layout_editor_absoluteY="8dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/nota_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/nota_image"
+            app:layout_constraintTop_toBottomOf="@+id/icons_holder"
             tools:text="TITLE" />
 
         <TextView
@@ -91,14 +101,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:padding="16dp"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nota_cuerpo"
             app:strokeColor="#000000"
-            app:strokeWidth="1dp">
-
+            app:strokeWidth="0.5dp">
             <TextView
                 android:id="@+id/nota_etiqueta"
                 android:layout_width="wrap_content"

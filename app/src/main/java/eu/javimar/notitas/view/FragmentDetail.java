@@ -77,21 +77,34 @@ public class FragmentDetail extends Fragment
     {
         if(nota != null)
         {
-            title.setText(nota.getNotaTitulo());
-            body.setText(nota.getNotaCuerpo());
+            String aux_str;
 
-            String label = nota.getNotaEtiqueta();
-            if(label == null || label.isEmpty())
+            title.setText(nota.getNotaTitulo());
+
+            aux_str = nota.getNotaCuerpo();
+            if(aux_str == null || aux_str.isEmpty())
+            {
+                body.setVisibility(GONE);
+            }
+            else
+            {
+                body.setVisibility(View.VISIBLE);
+                body.setText(aux_str);
+            }
+
+            aux_str = nota.getNotaEtiqueta();
+            if(aux_str == null || aux_str.isEmpty())
             {
                 labelCard.setVisibility(GONE);
             }
             else
             {
                 labelCard.setVisibility(View.VISIBLE);
-                etiqueta.setText(nota.getNotaEtiqueta());
+                etiqueta.setText(aux_str);
             }
 
-            if(nota.getNotaUriImage() == null || nota.getNotaUriImage().isEmpty())
+            aux_str = nota.getNotaUriImage();
+            if(aux_str == null || aux_str.isEmpty())
             {
                 notaImage.setVisibility(GONE);
             }
@@ -100,7 +113,7 @@ public class FragmentDetail extends Fragment
                 notaImage.setVisibility(View.VISIBLE);
                 // check first if resource was deleted
                 if(!isInternalUriPointingToValidResource(Uri
-                        .parse(nota.getNotaUriImage()), getActivity()))
+                        .parse(aux_str), getActivity()))
                 {
                     Toasty.error(getActivity(), R.string.err_image_resource_not_valid,
                             Toast.LENGTH_SHORT).show();
@@ -115,7 +128,7 @@ public class FragmentDetail extends Fragment
                     Bitmap scaleImage = BitmapScaler
                             .scaleToFitWidth(
                                     BitmapFactory
-                                            .decodeFile(Uri.parse(nota.getNotaUriImage()).getPath()),
+                                            .decodeFile(Uri.parse(aux_str).getPath()),
                                     deviceDensityIndependentPixels[0]);
                     // Show it in the ImageView
                     Glide
@@ -139,7 +152,8 @@ public class FragmentDetail extends Fragment
                 }
             }
 
-            if(nota.getNotaUriAudio() == null || nota.getNotaUriAudio().isEmpty())
+            aux_str = nota.getNotaUriAudio();
+            if(aux_str == null || aux_str.isEmpty())
             {
                 notaAudio.setVisibility(GONE);
             }

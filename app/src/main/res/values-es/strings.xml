@@ -15,7 +15,7 @@
     <string name="notas_etiqueta">Etiqueta (opcional)</string>
     <string name="notas_titulo">Añadir título</string>
     <string name="search_hint">Buscar en tus notas</string>
-    <string name="title_enter_nota">Añadir nota nueva</string>
+    <string name="title_enter_nota">Añadir nota</string>
     <string name="title_update_nota">Actualizar nota</string>
     <string name="update_nota_success">Nota actualizada</string>
     <string name="menu_item_audio">Audio</string>

@@ -20,8 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -65,7 +63,6 @@ import eu.javimar.notitas.model.Nota;
 import eu.javimar.notitas.synch.ReminderReceiver;
 import eu.javimar.notitas.util.BitmapScaler;
 import eu.javimar.notitas.util.ColorButton;
-import eu.javimar.notitas.util.MyBounceInterpolator;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
@@ -178,12 +175,6 @@ public class EditNota extends AppCompatActivity implements
         notaCard.setBackgroundColor(Color.parseColor(mColor));
         setCollapsingBarColor(Color.parseColor(mColor));
         mEdit_container.setBackgroundColor(Color.parseColor(mColor));
-
-        final Animation scale_up_animation =
-                AnimationUtils.loadAnimation(this, R.anim.scale_animation);
-        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
-        scale_up_animation.setInterpolator(interpolator);
-        view.startAnimation(scale_up_animation);
     }
 
     private void setScreenValues()
@@ -203,6 +194,7 @@ public class EditNota extends AppCompatActivity implements
             {
                 reminderCard.setVisibility(View.VISIBLE);
                 reminder.setText(mNota.getNotaReminderDate());
+                mReminderString = mNota.getNotaReminderDate();
                 reminderCard.setCardBackgroundColor(Color.parseColor(mColor));
             }
             else

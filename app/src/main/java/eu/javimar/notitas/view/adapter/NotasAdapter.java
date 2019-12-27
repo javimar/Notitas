@@ -73,13 +73,23 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
     {
         if(mNotasList != null)
         {
-            String aux;
+            String aux_str;
 
             holder.titulo.setText(mNotasList.get(position).getNotaTitulo());
-            holder.body.setText(mNotasList.get(position).getNotaCuerpo());
 
-            aux = mNotasList.get(position).getNotaEtiqueta();
-            if(aux == null || aux.equals(""))
+            aux_str = mNotasList.get(position).getNotaCuerpo();
+            if(aux_str == null || aux_str.isEmpty())
+            {
+                holder.body.setVisibility(GONE);
+            }
+            else
+            {
+                holder.body.setVisibility(View.VISIBLE);
+                holder.body.setText(aux_str);
+            }
+
+            aux_str = mNotasList.get(position).getNotaEtiqueta();
+            if(aux_str == null || aux_str.equals(""))
             {
                 holder.displayTag.setVisibility(GONE);
             }
@@ -95,8 +105,8 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
                     .setCardBackgroundColor(Color.parseColor(mNotasList
                             .get(position).getNotaColor()));
 
-            aux = mNotasList.get(position).getNotaUriAudio();
-            if(aux != null)
+            aux_str = mNotasList.get(position).getNotaUriAudio();
+            if(aux_str != null)
             {
                 holder.audio.setVisibility(View.VISIBLE);
             }
@@ -105,12 +115,12 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
                 holder.audio.setVisibility(GONE);
             }
 
-            aux = mNotasList.get(position).getNotaUriImage();
-            if(aux != null)
+            aux_str = mNotasList.get(position).getNotaUriImage();
+            if(aux_str != null)
             {
                 holder.image.setVisibility(View.VISIBLE);
 
-                if(!isInternalUriPointingToValidResource(Uri.parse(aux), mContext))
+                if(!isInternalUriPointingToValidResource(Uri.parse(aux_str), mContext))
                 {
                     Glide
                             .with(mContext)
@@ -123,7 +133,7 @@ public class NotasAdapter extends RecyclerView.Adapter<NotasAdapter.NotasViewHol
                     Bitmap scaleImage = BitmapScaler
                             .scaleToFitWidth(
                                     BitmapFactory
-                                            .decodeFile(Uri.parse(aux).getPath()),
+                                            .decodeFile(Uri.parse(aux_str).getPath()),
                                     deviceDensityIndependentPixels[0]);
                     // Show it in the ImageView
                     Glide

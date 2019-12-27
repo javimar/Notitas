@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">Little Notes</string>
-    <string name="title_enter_nota">Add New Note</string>
+    <string name="title_enter_nota">Add Note</string>
     <string name="title_update_nota">Update Note</string>
     <string name="title_audio">Audio Player</string>
 
