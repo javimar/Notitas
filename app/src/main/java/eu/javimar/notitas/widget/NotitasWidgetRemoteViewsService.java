@@ -21,6 +21,7 @@ import eu.javimar.notitas.util.BitmapScaler;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
+import static eu.javimar.notitas.util.HelperUtils.getDpsFromDevice;
 import static eu.javimar.notitas.util.HelperUtils.isInternalUriPointingToValidResource;
 
 public class NotitasWidgetRemoteViewsService extends RemoteViewsService
@@ -87,6 +88,9 @@ public class NotitasWidgetRemoteViewsService extends RemoteViewsService
                 if(isInternalUriPointingToValidResource(Uri
                         .parse(uri), getApplicationContext()))
                 {
+                    if(deviceDensityIndependentPixels == null) // it happens after reboot
+                        deviceDensityIndependentPixels = getDpsFromDevice(getApplicationContext());
+
                     remoteViews.setViewVisibility(R.id.widget_nota_image, VISIBLE);
                     // scale it to fit the width
                     Bitmap scaleImage = BitmapScaler

@@ -8,8 +8,8 @@ android
         applicationId "eu.javimar.notitas"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 6
-        versionName "1.5"
+        versionCode 7
+        versionName "1.5.1"
     }
     buildTypes
     {
@@ -37,9 +37,9 @@ dependencies
     annotationProcessor "androidx.room:room-compiler:2.2.3"
 
     // Lifecycle components
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-rc03"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     //noinspection LifecycleAnnotationProcessorWithJava8
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.2.0-rc03"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.2.0"
 
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
