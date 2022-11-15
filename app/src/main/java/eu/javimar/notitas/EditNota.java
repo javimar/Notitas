@@ -1,5 +1,13 @@
 package eu.javimar.notitas;
 
+import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
+import static eu.javimar.notitas.util.HelperUtils.bool2Int;
+import static eu.javimar.notitas.util.HelperUtils.cancelReminder;
+import static eu.javimar.notitas.util.HelperUtils.getKeyFromStr;
+import static eu.javimar.notitas.util.HelperUtils.int2Bool;
+import static eu.javimar.notitas.util.HelperUtils.isInternalUriPointingToValidResource;
+import static eu.javimar.notitas.util.HelperUtils.refreshWidget;
+
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -10,7 +18,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -54,6 +61,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -65,18 +73,10 @@ import eu.javimar.notitas.util.BitmapScaler;
 import eu.javimar.notitas.util.ColorButton;
 import eu.javimar.notitas.viewmodel.NotitasViewModel;
 
-import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
-import static eu.javimar.notitas.util.HelperUtils.bool2Int;
-import static eu.javimar.notitas.util.HelperUtils.cancelReminder;
-import static eu.javimar.notitas.util.HelperUtils.getKeyFromStr;
-import static eu.javimar.notitas.util.HelperUtils.int2Bool;
-import static eu.javimar.notitas.util.HelperUtils.isInternalUriPointingToValidResource;
-import static eu.javimar.notitas.util.HelperUtils.refreshWidget;
-
 public class EditNota extends AppCompatActivity implements
         TimePickerDialog.OnTimeSetListener,
-        DatePickerDialog.OnDateSetListener
-{
+        DatePickerDialog.OnDateSetListener {
+
     @BindView(R.id.addTitle) EditText addTitle;
     @BindView(R.id.addBody) EditText addBody;
     @BindView(R.id.addEtiqueta) EditText addLabel;
@@ -118,7 +118,7 @@ public class EditNota extends AppCompatActivity implements
 
         // Toolbar
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         mCollapsingToolbarLayout.setTitleEnabled(false);
 
         // Toolbar footer functionality
@@ -414,15 +414,10 @@ public class EditNota extends AppCompatActivity implements
     // gives nota color to the status bar and collapsing bar
     private void setCollapsingBarColor(int color)
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(color);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                //  set status text dark
-                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(color);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         mToolbar.setBackgroundColor(color);
         mCollapsingToolbarLayout.setContentScrimColor(color);
         mCollapsingToolbarLayout.setStatusBarScrimColor(color);
@@ -452,7 +447,7 @@ public class EditNota extends AppCompatActivity implements
 
                 case AUDIO_ACTIVITY_REQUEST_CODE:
                     // store audio path for DB persistence
-                    mAudioUri = data.getData().toString();
+                    mAudioUri = data != null ? data.getData().toString() : null;
                     break;
 
                 case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
@@ -477,7 +472,11 @@ public class EditNota extends AppCompatActivity implements
                     } catch (Exception e) { e.printStackTrace(); }
                     finally
                     {
-                        try { fos.close(); } catch (IOException e) { e.printStackTrace(); }
+                        try {
+                            if (fos != null) {
+                                fos.close();
+                            }
+                        } catch (IOException e) { e.printStackTrace(); }
                     }
                     addImage.setVisibility(View.VISIBLE);
                     addImage.setImageBitmap(image);
@@ -493,8 +492,7 @@ public class EditNota extends AppCompatActivity implements
         intent.setType("image/*");
         intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore
                 .Images.Media.INTERNAL_CONTENT_URI);
-        if(intent.resolveActivity(getPackageManager()) != null)
-        {
+        if(intent.resolveActivity(getPackageManager()) != null) {
             // Start the image intent to pick an image
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
@@ -546,8 +544,7 @@ public class EditNota extends AppCompatActivity implements
 
     private void addAudio()
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && ContextCompat.checkSelfPermission(this,
+        if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         {
             // true if app asks permission and user rejects request

@@ -41,27 +41,26 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package eu.javimar.notitas;
 
+import static eu.javimar.notitas.util.HelperUtils.getDpsFromDevice;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.view.Menu;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.Menu;
-import android.widget.ImageView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.javimar.notitas.view.FragmentNotaList;
 import eu.javimar.notitas.view.NotaDetailActivity;
-
-import static eu.javimar.notitas.util.HelperUtils.getDpsFromDevice;
 
 public class MainActivity extends AppCompatActivity implements
         FragmentNotaList.OnNotaItemSelectedListener
@@ -156,8 +155,7 @@ public class MainActivity extends AppCompatActivity implements
         // Get the search close button image view
         ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
         // Set on click listener
-        closeButton.setOnClickListener(v -> //onClick() :-)
-        {
+        closeButton.setOnClickListener(v -> {
             //Clear query
             searchView.setQuery("", false);
             //Collapse the action view

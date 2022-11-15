@@ -82,14 +82,14 @@
                         android:layout_width="40dp"
                         android:clickable="true"
                         android:layout_height="40dp"
-                        android:tint="@color/colorPrimaryDark"
                         android:contentDescription="@string/cd_image"
                         android:visibility="gone"
                         android:layout_marginBottom="8dp"
                         app:srcCompat="@drawable/ic_audio"
-                        android:focusable="true" />
+                        android:focusable="true"
+                        app:tint="@color/colorPrimaryDark" />
 
-                    <com.google.android.material.card.MaterialCardView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/cardViewReminder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -104,7 +104,6 @@
                             android:id="@+id/reminder"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_alarm_set"
                             android:drawablePadding="8dp"
                             android:layout_marginStart="6dp"
                             android:layout_marginEnd="6dp"
@@ -113,9 +112,10 @@
                             android:ellipsize="end"
                             tools:text="1 ene.2020, 20:30"
                             android:textSize="14sp"
-                            android:textStyle="italic" />
+                            android:textStyle="italic"
+                            app:drawableStartCompat="@drawable/ic_alarm_set" />
 
-                    </com.google.android.material.card.MaterialCardView>
+                    </androidx.cardview.widget.CardView>
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"
@@ -258,7 +258,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 </ScrollView>
 

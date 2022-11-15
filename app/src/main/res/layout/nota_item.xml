@@ -40,12 +40,12 @@
                 android:layout_height="20dp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/cd_image"
-                android:tint="@color/colorPrimaryDark"
                 android:paddingTop="3dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/ic_audio"
-                tools:layout_editor_absoluteY="8dp" />
+                tools:layout_editor_absoluteY="8dp"
+                app:tint="@color/colorPrimaryDark" />
 
             <ImageView
                 android:id="@+id/nota_reminder_set"
@@ -53,11 +53,11 @@
                 android:layout_height="20dp"
                 android:layout_marginStart="8dp"
                 android:contentDescription="@string/cd_image"
-                android:tint="@color/colorPrimaryDark"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/ic_alarm_set"
-                tools:layout_editor_absoluteY="8dp" />
+                tools:layout_editor_absoluteY="8dp"
+                app:tint="@color/colorPrimaryDark" />
         </LinearLayout>
 
         <TextView
@@ -94,7 +94,7 @@
             app:layout_constraintTop_toBottomOf="@+id/nota_titulo"
             tools:text="BODY" />
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cardViewTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                 android:textSize="14sp"
                 android:textStyle="italic"
                 tools:text="Label" />
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

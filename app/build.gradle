@@ -1,55 +1,61 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
 android
 {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
-    defaultConfig
-    {
+    compileSdkVersion 32
+
+    defaultConfig {
         applicationId "eu.javimar.notitas"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 7
-        versionName "1.5.1"
+        minSdkVersion 23
+        targetSdkVersion 32
+        versionCode 8
+        versionName "1.5.2"
     }
-    buildTypes
-    {
-        release
-        {
+
+    buildTypes {
+        release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions
-    {
+
+    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-dependencies
-{
+dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.material:material:1.7.0'
 
     // Room
-    implementation "androidx.room:room-runtime:2.2.3"
-    annotationProcessor "androidx.room:room-compiler:2.2.3"
+    implementation "androidx.room:room-runtime:2.4.3"
+    annotationProcessor "androidx.room:room-compiler:2.4.3"
 
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     //noinspection LifecycleAnnotationProcessorWithJava8
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.2.0"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.5.1"
 
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 
     implementation 'com.github.GrenderG:Toasty:1.4.2'
 
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
+
+    implementation platform('com.google.firebase:firebase-bom:31.0.3')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
 }
