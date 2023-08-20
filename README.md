@@ -5,6 +5,10 @@ MVVM is one of the architectural patterns that enhances the separation of concer
 
 The app allows you to add, edit and delete notes (audio, text and image or photo), as well as assigning them colors and labels.
 
+Important note: This app has become old since it uses no architecture at all, no DI, deprecated ways to access the data layer, etc. 
+Still it can be used and works ok. Whan I have time I will migrate it to modern Android development. Till then, enjoy.
+
+
 ### Some screen shots
 
 ![Screenshot 1](https://github.com/javimar/Notitas/blob/master/screenshots/screen1.png)
