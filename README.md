@@ -1,12 +1,11 @@
-# Notes app is just a Note taking app which shows Room and the MVVM Android architecture
-This handy app "mimics" Google's Keep app showing how to leverage Android Architecture Components: Room, ViewModel, and LiveData.
+This handy app "mimics" Google's Keep app showing how to leverage Android Components: Room, ViewModel, and LiveData.
 
 MVVM is one of the architectural patterns that enhances the separation of concerns, allowing the separation of the user interface logic from the back-end logic. Its target is to keep the UI code simple and free of app logic in order to make it easier to manage.
 
 The app allows you to add, edit and delete notes (audio, text and image or photo), as well as assigning them colors and labels.
 
 Important note: This app has become old since it uses no architecture at all, no DI, deprecated ways to access the data layer, etc. 
-Still it can be used and works ok. Whan I have time I will migrate it to modern Android development. Till then, enjoy.
+Still it can be used and works ok. When I have time I will migrate it to modern Android development. Till then, enjoy.
 
 
 ### Some screen shots
