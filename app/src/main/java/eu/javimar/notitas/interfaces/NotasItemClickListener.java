@@ -1,6 +1,5 @@
 package eu.javimar.notitas.interfaces;
 
-public interface NotasItemClickListener
-{
+public interface NotasItemClickListener {
     void onNotaItemClick(int clickedNotaId);
 }

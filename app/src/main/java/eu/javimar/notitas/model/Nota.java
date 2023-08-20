@@ -6,16 +6,12 @@ import android.os.Parcelable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.OnConflictStrategy;
 import androidx.room.PrimaryKey;
-import androidx.room.Update;
 
 @Entity(tableName = "notas")
-public class Nota implements Parcelable
-{
+public class Nota implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "notaId")
-    @Update(onConflict = OnConflictStrategy.REPLACE)
     private int notaId;
 
     @ColumnInfo(name = "notaTitulo")
@@ -46,8 +42,7 @@ public class Nota implements Parcelable
     public Nota(int notaId, String notaTitulo, String notaCuerpo,
                 String notaEtiqueta, String notaColor,
                 String notaUriImage, String notaUriAudio,
-                int notaReminderOn, String notaReminderDate)
-    {
+                int notaReminderOn, String notaReminderDate) {
         this.notaId = notaId;
         this.notaTitulo = notaTitulo;
         this.notaCuerpo = notaCuerpo;
@@ -62,8 +57,7 @@ public class Nota implements Parcelable
     @Ignore
     public Nota(String notaTitulo, String notaCuerpo,
                 String notaEtiqueta, String notaColor, String notaUriImage,
-                String notaUriAudio, int notaReminderOn, String notaReminderDate)
-    {
+                String notaUriAudio, int notaReminderOn, String notaReminderDate) {
         this.notaTitulo = notaTitulo;
         this.notaCuerpo = notaCuerpo;
         this.notaEtiqueta = notaEtiqueta;
@@ -123,7 +117,7 @@ public class Nota implements Parcelable
     }
 
     public void setNotaTitulo(String notaTitulo) {
-        this.notaTitulo= notaTitulo;
+        this.notaTitulo = notaTitulo;
     }
 
     public int getNotaReminderOn() {
@@ -168,8 +162,8 @@ public class Nota implements Parcelable
         this.notaColor = in.readString();
         this.notaUriImage = in.readString();
         this.notaUriAudio = in.readString();
-        this.notaReminderOn= in.readInt();
-        this.notaReminderDate= in.readString();
+        this.notaReminderOn = in.readInt();
+        this.notaReminderDate = in.readString();
     }
 
     public static final Parcelable.Creator<Nota> CREATOR = new Parcelable.Creator<Nota>() {

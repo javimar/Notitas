@@ -1,7 +1,6 @@
 package eu.javimar.notitas.interfaces;
 
-public interface ItemTouchHelperViewHolder
-{
+public interface ItemTouchHelperViewHolder {
     /**
      * Called when the ItemTouchHelper first registers an
      * item as being moved or swiped. Implementations should update

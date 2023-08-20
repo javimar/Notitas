@@ -1,5 +1,11 @@
 package eu.javimar.notitas.widget;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
+import static eu.javimar.notitas.util.HelperUtils.getDpsFromDevice;
+import static eu.javimar.notitas.util.HelperUtils.isInternalUriPointingToValidResource;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,54 +24,42 @@ import eu.javimar.notitas.database.NotasDao;
 import eu.javimar.notitas.model.Nota;
 import eu.javimar.notitas.util.BitmapScaler;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static eu.javimar.notitas.MainActivity.deviceDensityIndependentPixels;
-import static eu.javimar.notitas.util.HelperUtils.getDpsFromDevice;
-import static eu.javimar.notitas.util.HelperUtils.isInternalUriPointingToValidResource;
+public class NotitasWidgetRemoteViewsService extends RemoteViewsService {
 
-public class NotitasWidgetRemoteViewsService extends RemoteViewsService
-{
     @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent)
-    {
+    public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new NotitasRemoteViewsFactory(this.getApplicationContext());
     }
 
-    class NotitasRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
-    {
+    class NotitasRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         private final NotasDao notasDao;
         private List<Nota> allNotas;
 
-        NotitasRemoteViewsFactory(Context context)
-        {
+        NotitasRemoteViewsFactory(Context context) {
             MiBaseDatosNotas db;
             db = MiBaseDatosNotas.getDatabase(context);
             notasDao = db.notasDao();
         }
 
         @Override
-        public void onCreate() { }
+        public void onCreate() {
+        }
 
         @Override
-        public void onDataSetChanged()
-        {
+        public void onDataSetChanged() {
             allNotas = notasDao.getAllNotasForWidget();
         }
 
         @Override
-            public int getCount()
-            {
-                return allNotas == null ? 0 :
-                        allNotas.size();
-            }
+        public int getCount() {
+            return allNotas == null ? 0 :
+                    allNotas.size();
+        }
 
         @Override
-        public RemoteViews getViewAt(int position)
-        {
-            if(position == AdapterView.INVALID_POSITION ||
-                    allNotas == null)
-            {
+        public RemoteViews getViewAt(int position) {
+            if (position == AdapterView.INVALID_POSITION ||
+                    allNotas == null) {
                 return null;
             }
             RemoteViews remoteViews = new RemoteViews(getPackageName(),
@@ -79,16 +73,12 @@ public class NotitasWidgetRemoteViewsService extends RemoteViewsService
 
             // Load image in container via Glide
             String uri = allNotas.get(position).getNotaUriImage();
-            if(uri == null)
-            {
+            if (uri == null) {
                 remoteViews.setViewVisibility(R.id.widget_nota_image, GONE);
-            }
-            else
-            {
-                if(isInternalUriPointingToValidResource(Uri
-                        .parse(uri), getApplicationContext()))
-                {
-                    if(deviceDensityIndependentPixels == null) // it happens after reboot
+            } else {
+                if (isInternalUriPointingToValidResource(Uri
+                        .parse(uri), getApplicationContext())) {
+                    if (deviceDensityIndependentPixels == null) // it happens after reboot
                         deviceDensityIndependentPixels = getDpsFromDevice(getApplicationContext());
 
                     remoteViews.setViewVisibility(R.id.widget_nota_image, VISIBLE);
@@ -103,18 +93,18 @@ public class NotitasWidgetRemoteViewsService extends RemoteViewsService
                 }
             }
 
-            if(allNotas.get(position).getNotaUriAudio() != null)
+            if (allNotas.get(position).getNotaUriAudio() != null)
                 remoteViews.setViewVisibility(R.id.widget_nota_audio, VISIBLE);
             else
                 remoteViews.setViewVisibility(R.id.widget_nota_audio, GONE);
 
             remoteViews.setTextColor(R.id.widget_list, Color.parseColor(
                     allNotas.get(position).getNotaColor()));
-            remoteViews.setInt(R.id.widget_nota_title,"setTextColor",
+            remoteViews.setInt(R.id.widget_nota_title, "setTextColor",
                     R.color.black);
-            remoteViews.setInt(R.id.widget_nota_body,"setTextColor",
+            remoteViews.setInt(R.id.widget_nota_body, "setTextColor",
                     R.color.black);
-            remoteViews.setInt(R.id.widget_list_item,"setBackgroundColor",
+            remoteViews.setInt(R.id.widget_list_item, "setBackgroundColor",
                     Color.parseColor(allNotas.get(position).getNotaColor()));
 
             // Fill-in intent for each item in the ListView. This is combined with the
@@ -128,24 +118,27 @@ public class NotitasWidgetRemoteViewsService extends RemoteViewsService
         }
 
         @Override
-        public RemoteViews getLoadingView()
-        {
+        public RemoteViews getLoadingView() {
             return new RemoteViews(getPackageName(), R.layout.widget_detail_list_item);
         }
 
         @Override
-        public int getViewTypeCount() { return 1; }
+        public int getViewTypeCount() {
+            return 1;
+        }
 
         @Override
-        public long getItemId(int position)
-        {
+        public long getItemId(int position) {
             return position;
         }
 
         @Override
-        public boolean hasStableIds() { return true; }
+        public boolean hasStableIds() {
+            return true;
+        }
 
         @Override
-        public void onDestroy() { }
+        public void onDestroy() {
+        }
     }
 }

@@ -13,8 +13,7 @@ import java.util.List;
 import eu.javimar.notitas.model.Nota;
 
 @Dao
-public abstract class NotasDao
-{
+public abstract class NotasDao {
     @Insert
     public abstract long insert(Nota nota);
 
@@ -41,8 +40,7 @@ public abstract class NotasDao
     public abstract void resetNotasAfterReminder(int id);
 
     @Transaction
-    public void swapNotas(int i1, int i2)
-    {
+    public void swapNotas(int i1, int i2) {
         // Anything inside this method runs in a single transaction.
         String temp;
         Nota n1 = findNota(i1);

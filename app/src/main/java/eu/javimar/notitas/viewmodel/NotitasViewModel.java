@@ -11,14 +11,12 @@ import java.util.List;
 
 import eu.javimar.notitas.model.Nota;
 
-public class NotitasViewModel extends AndroidViewModel
-{
+public class NotitasViewModel extends AndroidViewModel {
     private final NotitasRepository repository;
     private final LiveData<List<Nota>> allNotasSorted;
     private final MutableLiveData<List<Nota>> searchQueryResults;
 
-    public NotitasViewModel(@NonNull Application application)
-    {
+    public NotitasViewModel(@NonNull Application application) {
         super(application);
         repository = new NotitasRepository(application);
         allNotasSorted = repository.getAllNotasSorted();
@@ -26,36 +24,35 @@ public class NotitasViewModel extends AndroidViewModel
     }
 
     // GETTERS to be called form the UI
-    public MutableLiveData<List<Nota>> getSearchQueryResults() { return searchQueryResults; }
-    public void getSearchResults(String query) { repository.getSearchResults(query); }
+    public MutableLiveData<List<Nota>> getSearchQueryResults() {
+        return searchQueryResults;
+    }
 
-    public LiveData<List<Nota>> getAllNotasSorted()
-    {
+    public void getSearchResults(String query) {
+        repository.getSearchResults(query);
+    }
+
+    public LiveData<List<Nota>> getAllNotasSorted() {
         return allNotasSorted;
     }
 
-    public Nota findNota(int id)
-    {
+    public Nota findNota(int id) {
         return repository.findNota(id);
     }
 
-    public long insertNota(Nota newNota)
-    {
+    public long insertNota(Nota newNota) {
         return repository.insertNota(newNota);
     }
 
-    public void deleteNota(int id)
-    {
+    public void deleteNota(int id) {
         repository.deleteNota(id);
     }
 
-    public void updateNota(Nota nota)
-    {
+    public void updateNota(Nota nota) {
         repository.updateNota(nota);
     }
 
-    public void swapNotas(int current, int newId)
-    {
+    public void swapNotas(int current, int newId) {
         repository.swapNotas(current, newId);
     }
 }

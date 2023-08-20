@@ -1,8 +1,6 @@
 package eu.javimar.notitas.interfaces;
 
-public interface ItemTouchHelperAdapter
-{
+public interface ItemTouchHelperAdapter {
     void onItemMove(int fromPosition, int toPosition);
 
-    void onItemDismiss(int position);
 }

@@ -13,17 +13,14 @@ import eu.javimar.notitas.MainActivity;
 import eu.javimar.notitas.R;
 import eu.javimar.notitas.view.NotaDetailActivity;
 
-public class NotitasWidgetProvider extends AppWidgetProvider
-{
+public class NotitasWidgetProvider extends AppWidgetProvider {
     private static final String WIDGET_ITEM_CLICK_ACTION = "widget_item_click_action";
 
     // Called when the BroadcastReceiver receives an Intent broadcast.
     @Override
-    public void onReceive(Context context, Intent intent)
-    {
+    public void onReceive(Context context, Intent intent) {
         // receives the fillInIntent from RemoteViews getViewAt
-        if(intent.getAction() != null && intent.getAction().equals(WIDGET_ITEM_CLICK_ACTION))
-        {
+        if (intent.getAction() != null && intent.getAction().equals(WIDGET_ITEM_CLICK_ACTION)) {
             int notaId = intent.getIntExtra("notaId", 0);
 
             Intent intentDetail = new Intent(context, NotaDetailActivity.class);
@@ -37,11 +34,9 @@ public class NotitasWidgetProvider extends AppWidgetProvider
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
-    {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // Perform this loop procedure for each App Widget that belongs to this provider
-        for(int appWidgetId : appWidgetIds)
-        {
+        for (int appWidgetId : appWidgetIds) {
             // Set up the intent that starts the RemoteViews, which will
             // provide the views for this collection.
             Intent intent = new Intent(context, NotitasWidgetRemoteViewsService.class);

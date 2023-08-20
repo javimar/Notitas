@@ -13,19 +13,17 @@ import eu.javimar.notitas.database.MiBaseDatosNotas;
 import eu.javimar.notitas.database.NotasDao;
 import eu.javimar.notitas.model.Nota;
 
-class NotitasRepository
-{
+class NotitasRepository {
     private final NotasDao notasDao;
 
     private final LiveData<List<Nota>> allNotasSorted;
+
     // Method that the ViewModel can call to obtain references to the allNotas
-    LiveData<List<Nota>> getAllNotasSorted()
-    {
+    LiveData<List<Nota>> getAllNotasSorted() {
         return allNotasSorted;
     }
 
-    public NotitasRepository(Application application)
-    {
+    public NotitasRepository(Application application) {
         MiBaseDatosNotas db;
         db = MiBaseDatosNotas.getDatabase(application);
         notasDao = db.notasDao();
@@ -33,74 +31,88 @@ class NotitasRepository
     }
 
     // FIND A NOTA LOGIC
-    Nota findNota(int id)
-    {
+    Nota findNota(int id) {
         FindAsyncTask task = new FindAsyncTask(notasDao);
-        try { return task.execute(id).get(); }
-        catch (ExecutionException | InterruptedException e) { e.printStackTrace(); }
+        try {
+            return task.execute(id).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
         return null;
     }
-    private static class FindAsyncTask extends AsyncTask<Integer, Void, Nota>
-    {
+
+    private static class FindAsyncTask extends AsyncTask<Integer, Void, Nota> {
         private final NotasDao asyncTaskDao;
-        FindAsyncTask(NotasDao dao) { asyncTaskDao = dao; }
+
+        FindAsyncTask(NotasDao dao) {
+            asyncTaskDao = dao;
+        }
+
         @Override
-        protected Nota doInBackground(final Integer... ids)
-        {
+        protected Nota doInBackground(final Integer... ids) {
             return asyncTaskDao.findNota(ids[0]);
         }
     }
 
     // INSERT LOGIC
-    long insertNota(Nota newNota)
-    {
+    long insertNota(Nota newNota) {
         InsertAsyncTask task = new InsertAsyncTask(notasDao);
-        try { return task.execute(newNota).get(); }
-        catch (ExecutionException | InterruptedException e) { e.printStackTrace(); }
+        try {
+            return task.execute(newNota).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
         return -1;
     }
-    private static class InsertAsyncTask extends AsyncTask<Nota, Void, Long>
-    {
+
+    private static class InsertAsyncTask extends AsyncTask<Nota, Void, Long> {
         private final NotasDao asyncTaskDao;
-        InsertAsyncTask(NotasDao dao) { asyncTaskDao = dao; }
+
+        InsertAsyncTask(NotasDao dao) {
+            asyncTaskDao = dao;
+        }
+
         @Override
-        protected Long doInBackground(final Nota... notas)
-        {
+        protected Long doInBackground(final Nota... notas) {
             return asyncTaskDao.insert(notas[0]);
         }
     }
 
     // DELETE LOGIC
-    void deleteNota(int id)
-    {
+    void deleteNota(int id) {
         DeleteAsyncTask task = new DeleteAsyncTask(notasDao);
         task.execute(id);
     }
-    private static class DeleteAsyncTask extends AsyncTask<Integer, Void, Void>
-    {
+
+    private static class DeleteAsyncTask extends AsyncTask<Integer, Void, Void> {
         private final NotasDao asyncTaskDao;
-        DeleteAsyncTask(NotasDao dao) { asyncTaskDao = dao; }
+
+        DeleteAsyncTask(NotasDao dao) {
+            asyncTaskDao = dao;
+        }
+
         @Override
-        protected Void doInBackground(final Integer... ids)
-        {
+        protected Void doInBackground(final Integer... ids) {
             asyncTaskDao.deleteNota(ids[0]);
             return null;
         }
     }
 
     // UPDATE LOGIC
-    void updateNota(Nota nota)
-    {
+    void updateNota(Nota nota) {
         UpdateAsyncTask task = new UpdateAsyncTask(notasDao);
         task.execute(nota);
     }
-    private static class UpdateAsyncTask extends AsyncTask<Nota, Void, Void>
-    {
+
+    private static class UpdateAsyncTask extends AsyncTask<Nota, Void, Void> {
         private final NotasDao asyncTaskDao;
-        UpdateAsyncTask(NotasDao dao) { asyncTaskDao = dao; }
+
+        UpdateAsyncTask(NotasDao dao) {
+            asyncTaskDao = dao;
+        }
+
         @Override
-        protected Void doInBackground(final Nota... notas)
-        {
+        protected Void doInBackground(final Nota... notas) {
             asyncTaskDao.updateNote(notas[0]);
             return null;
         }
@@ -108,49 +120,55 @@ class NotitasRepository
 
     // SEARCH FUNCTIONALITY
     private final MutableLiveData<List<Nota>> searchQueryResults = new MutableLiveData<>();
-    private void asyncSearchFinished(List<Nota> queryResults) { searchQueryResults.setValue(queryResults); }
-    MutableLiveData<List<Nota>> getSearchQueryResults() { return searchQueryResults; }
-    void getSearchResults(String query)
-    {
+
+    private void asyncSearchFinished(List<Nota> queryResults) {
+        searchQueryResults.setValue(queryResults);
+    }
+
+    MutableLiveData<List<Nota>> getSearchQueryResults() {
+        return searchQueryResults;
+    }
+
+    void getSearchResults(String query) {
         SearchAsyncTask task = new SearchAsyncTask(notasDao);
         task.delegate = this;
         task.execute(query);
     }
-    private static class SearchAsyncTask extends AsyncTask<String, Void, List<Nota>>
-    {
+
+    private static class SearchAsyncTask extends AsyncTask<String, Void, List<Nota>> {
         private final NotasDao asyncTaskDao;
         private NotitasRepository delegate = null;
-        SearchAsyncTask (NotasDao dao)
-        {
+
+        SearchAsyncTask(NotasDao dao) {
             asyncTaskDao = dao;
         }
+
         @Override
-        protected List<Nota> doInBackground(String... queries)
-        {
+        protected List<Nota> doInBackground(String... queries) {
             return asyncTaskDao.getSearchResults(queries[0]);
         }
+
         @Override
-        protected void onPostExecute(List<Nota> nota)
-        {
+        protected void onPostExecute(List<Nota> nota) {
             delegate.asyncSearchFinished(nota);
         }
     }
 
     // UPDATE ID LOGIC WHEN DRAGGING ELEMENTS
-    void swapNotas(int current, int newId)
-    {
+    void swapNotas(int current, int newId) {
         UpdateIdAsyncTask task = new UpdateIdAsyncTask(notasDao);
-        task.execute(current, newId );
+        task.execute(current, newId);
     }
-    private static class UpdateIdAsyncTask extends AsyncTask<Integer, Void, Void>
-    {
+
+    private static class UpdateIdAsyncTask extends AsyncTask<Integer, Void, Void> {
         private final NotasDao asyncTaskDao;
+
         UpdateIdAsyncTask(NotasDao dao) {
             asyncTaskDao = dao;
         }
+
         @Override
-        protected Void doInBackground(Integer... ids)
-        {
+        protected Void doInBackground(Integer... ids) {
             asyncTaskDao.swapNotas(ids[0], ids[1]);
             return null;
         }

@@ -1,7 +1,6 @@
 package eu.javimar.notitas.util;
 
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,16 +8,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
 
 import eu.javimar.notitas.R;
 import eu.javimar.notitas.view.NotaDetailActivity;
 
-public class NotificationHelper extends ContextWrapper
-{
+public class NotificationHelper extends ContextWrapper {
     // The id of the channel. Necessary for Android O
     private static final String NOTITAS_CHANNEL_ID = "notitas_channel_id";
     private static final String NOTITAS_CHANNEL_NAME = "notitas_channel_name";
@@ -26,21 +24,15 @@ public class NotificationHelper extends ContextWrapper
 
     private NotificationManager mManager;
 
-    public NotificationHelper(Context base)
-    {
+    public NotificationHelper(Context base) {
         super(base);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
-            createChannels();
-        }
+        createChannels();
     }
 
-    @TargetApi(Build.VERSION_CODES.O)
-    private void createChannels()
-    {
+    private void createChannels() {
         NotificationChannel owsChannel =
                 new NotificationChannel(NOTITAS_CHANNEL_ID, NOTITAS_CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_HIGH);
+                        NotificationManager.IMPORTANCE_HIGH);
         owsChannel.enableLights(true);
         owsChannel.enableVibration(true);
         owsChannel.setLightColor(R.color.colorPrimary);
@@ -48,11 +40,9 @@ public class NotificationHelper extends ContextWrapper
         getManager().createNotificationChannel(owsChannel);
     }
 
-    public NotificationManager getManager()
-    {
-        if(mManager == null)
-        {
-            mManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+    public NotificationManager getManager() {
+        if (mManager == null) {
+            mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         }
         return mManager;
     }
@@ -60,8 +50,7 @@ public class NotificationHelper extends ContextWrapper
     public NotificationCompat.Builder getChannelNotification(String header,
                                                              int notaId,
                                                              String message,
-                                                             int requestCode)
-    {
+                                                             int requestCode) {
         // Open activity
         Intent resultIntent = new Intent(this, NotaDetailActivity.class);
         resultIntent.putExtra("notaId", notaId);
@@ -79,7 +68,7 @@ public class NotificationHelper extends ContextWrapper
                         .bigText(message))
                 .setSmallIcon(R.drawable.ic_nota_notification)
                 .setDefaults(Notification.DEFAULT_SOUND)
-                .setColor(getApplicationContext().getResources().getColor(R.color.colorAccent))
+                .setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent))
                 .setWhen(System.currentTimeMillis())
                 .setGroup(NOTITAS_GROUP)
                 .setAutoCancel(true)

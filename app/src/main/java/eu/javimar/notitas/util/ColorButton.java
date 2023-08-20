@@ -2,14 +2,11 @@ package eu.javimar.notitas.util;
 
 import eu.javimar.notitas.R;
 
-public class ColorButton
-{
-    public static int colorButton(int id)
-    {
+public class ColorButton {
+    public static int colorButton(int id) {
         int color;
 
-        switch(id)
-        {
+        switch (id) {
             case R.id.c1:
                 color = R.color.c1;
                 break;
