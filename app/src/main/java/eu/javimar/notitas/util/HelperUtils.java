@@ -111,7 +111,7 @@ public final class HelperUtils {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ReminderReceiver.class);
         PendingIntent pendingIntent = PendingIntent
-                .getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                .getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         alarmManager.cancel(pendingIntent);
 
         if (!isNotaBeingDeleted)

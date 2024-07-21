@@ -18,9 +18,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -544,14 +546,36 @@ public class EditNota extends AppCompatActivity implements
                 (String.format(getString(R.string.notification_ows_event_message), notaTitle)));
         intent.putExtra("requestCode", requestCode);
         PendingIntent pendingIntent = PendingIntent
-                .getBroadcast(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                .getBroadcast(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         Toasty.info(this, getString(R.string.reminder_on), Toast.LENGTH_SHORT).show();
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,
-                mReminderDateTime.atZone(ZoneId.of(TimeZone.getDefault()
-                        .getID())).toInstant().toEpochMilli(),
-                pendingIntent);
+        setAlarm(alarmManager, pendingIntent);
+    }
+
+    private void setAlarm(AlarmManager alarmManager, PendingIntent pendingIntent) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (alarmManager.canScheduleExactAlarms()) {
+                // Permission granted, schedule exact
+                alarmManager.setExact(
+                    AlarmManager.RTC_WAKEUP,
+                            mReminderDateTime.atZone(ZoneId.of(TimeZone.getDefault().getID())).toInstant().toEpochMilli(),
+                            pendingIntent);
+            } else {
+                // Permission denied, request it
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                startActivity(intent);
+            }
+        } else {
+            // For older Android versions, schedule directly
+            alarmManager.setExact(
+                    AlarmManager.RTC_WAKEUP,
+                    mReminderDateTime.atZone(ZoneId.of(TimeZone.getDefault().getID())).toInstant().toEpochMilli(),
+                    pendingIntent
+            );
+        }
         mCalendar = null;
     }
 }

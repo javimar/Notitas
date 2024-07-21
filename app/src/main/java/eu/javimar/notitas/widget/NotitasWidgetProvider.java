@@ -53,7 +53,7 @@ public class NotitasWidgetProvider extends AppWidgetProvider {
             // Create an Intent to launch MainActivity
             Intent intentMain = new Intent(context, MainActivity.class);
             PendingIntent pendingIntent =
-                    PendingIntent.getActivity(context, 0, intentMain, 0);
+                    PendingIntent.getActivity(context, 0, intentMain, PendingIntent.FLAG_IMMUTABLE);
             remoteViews.setOnClickPendingIntent(R.id.widget_header, pendingIntent);
 
             // This section makes it possible for items to have individualized behavior.
@@ -66,7 +66,7 @@ public class NotitasWidgetProvider extends AppWidgetProvider {
             // broadcasting TOAST_ACTION.
             itemIntent.setAction(WIDGET_ITEM_CLICK_ACTION);
             PendingIntent itemClickPendingIntent = PendingIntent.getBroadcast(context, 0, itemIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             remoteViews.setPendingIntentTemplate(R.id.widget_list, itemClickPendingIntent);
 
             // Tell the AppWidgetManager to perform an update on the current app widget

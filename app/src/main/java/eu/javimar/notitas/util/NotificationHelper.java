@@ -59,7 +59,7 @@ public class NotificationHelper extends ContextWrapper {
         stackBuilder.addNextIntentWithParentStack(resultIntent);
         // Get the PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
+                stackBuilder.getPendingIntent(requestCode, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         return new NotificationCompat.Builder(getApplicationContext(), NOTITAS_CHANNEL_ID)
                 .setContentTitle(header)

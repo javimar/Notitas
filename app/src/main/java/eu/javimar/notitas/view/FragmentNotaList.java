@@ -62,7 +62,7 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
                 notas ->
                 {
                     mNotasAdapter.setNotasList(notas);
-                    if (notas == null || notas.size() == 0) {
+                    if (notas == null || notas.isEmpty()) {
                         binding.tvEmptyView.setVisibility(View.VISIBLE);
                         binding.tvEmptyView.setText(R.string.err_no_notes_found);
                     } else {
@@ -77,7 +77,7 @@ public class FragmentNotaList extends Fragment implements NotasItemClickListener
         mViewModel.getSearchQueryResults().observe(getViewLifecycleOwner(), notas ->
         {
             mNotasAdapter.setNotasList(notas);
-            if (notas == null || notas.size() == 0) {
+            if (notas == null || notas.isEmpty()) {
                 binding.tvEmptyView.setVisibility(View.VISIBLE);
                 binding.tvEmptyView.setText(R.string.no_notes_found);
             } else {
